@@ -23,6 +23,6 @@
     </target>
 
 	<target name="jar_and_bundle" depends="jar">
-		<copy file="../install/${file.jar}" todir="${dir.workspace}/Scratch Runner Main/dist/install/plain/bundle"/>
+		<copy file="../install/${file.jar}" todir="${dir.workspace}/scratch-runner-main/dist/install/plain/bundle"/>
 	</target>
 </project>
