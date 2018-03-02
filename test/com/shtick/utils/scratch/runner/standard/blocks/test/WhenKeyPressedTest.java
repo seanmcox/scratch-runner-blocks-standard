@@ -28,17 +28,18 @@ class WhenKeyPressedTest {
 	void testApplicationStarted() {
 		WhenKeyPressed op = new WhenKeyPressed();
 
-		KeyReportingRuntime runtime = new KeyReportingRuntime();
+		KeyReportingRuntime runtime = new KeyReportingRuntime(false);
 		assertEquals(0,runtime.listeners.size());
 		op.applicationStarted(runtime);
 		assertEquals(1,runtime.listeners.size());
 	}
 
+	@SuppressWarnings("serial")
 	@Test
 	void testRegisterUnregister() {
 		{ // Test expected use case
 			WhenKeyPressed op = new WhenKeyPressed();
-			KeyReportingRuntime runtime = new KeyReportingRuntime();
+			KeyReportingRuntime runtime = new KeyReportingRuntime(false);
 			op.applicationStarted(runtime);
 			KeyListener keyListener = runtime.listeners.iterator().next();
 			ScriptTuple scriptTuple0 = new AllBadScriptTuple();
@@ -107,7 +108,7 @@ class WhenKeyPressedTest {
 		
 		{ // test unregister wrong name case.
 			WhenKeyPressed op = new WhenKeyPressed();
-			KeyReportingRuntime runtime = new KeyReportingRuntime();
+			KeyReportingRuntime runtime = new KeyReportingRuntime(false);
 			op.applicationStarted(runtime);
 			KeyListener keyListener = runtime.listeners.iterator().next();
 			ScriptTuple scriptTuple0 = new AllBadScriptTuple();
@@ -165,7 +166,7 @@ class WhenKeyPressedTest {
 		
 		{ // test register wrong name case.
 			WhenKeyPressed op = new WhenKeyPressed();
-			KeyReportingRuntime runtime = new KeyReportingRuntime();
+			KeyReportingRuntime runtime = new KeyReportingRuntime(false);
 			op.applicationStarted(runtime);
 			KeyListener keyListener = runtime.listeners.iterator().next();
 			ScriptTuple scriptTuple0 = new AllBadScriptTuple();
@@ -201,7 +202,7 @@ class WhenKeyPressedTest {
 		
 		{ // test register with bad parameters
 			WhenKeyPressed op = new WhenKeyPressed();
-			KeyReportingRuntime runtime = new KeyReportingRuntime();
+			KeyReportingRuntime runtime = new KeyReportingRuntime(false);
 			op.applicationStarted(runtime);
 			ScriptTuple newScriptTuple = new AllBadScriptTuple();
 			
@@ -226,7 +227,7 @@ class WhenKeyPressedTest {
 		
 		{ // test unregister with bad parameters
 			WhenKeyPressed op = new WhenKeyPressed();
-			KeyReportingRuntime runtime = new KeyReportingRuntime();
+			KeyReportingRuntime runtime = new KeyReportingRuntime(false);
 			op.applicationStarted(runtime);
 			ScriptTuple newScriptTuple = new AllBadScriptTuple();
 			
@@ -250,11 +251,69 @@ class WhenKeyPressedTest {
 			}
 		}
 	}
+
+	@SuppressWarnings("serial")
+	@Test
+	void testConcurrency() {
+		WhenKeyPressed op = new WhenKeyPressed();
+		KeyReportingRuntime runtime = new KeyReportingRuntime(true);
+		op.applicationStarted(runtime);
+		KeyListener keyListener = runtime.listeners.iterator().next();
+		ScriptTuple scriptTuple0 = new AllBadScriptTuple();
+
+		assertEquals(0,runtime.runners.size());
+
+		op.registerListeningScript(scriptTuple0, new Object[] {"0"});
+		// Run registered
+		keyListener.keyPressed(new KeyEvent(new Component() {}, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_0, '0'));
+		try {
+			Thread.sleep(500);
+		}
+		catch(InterruptedException t) {
+			fail("Interrupted");
+		}
+		assertEquals(1,runtime.runners.size()); // Runner was created.
+
+		keyListener.keyPressed(new KeyEvent(new Component() {}, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_0, '0'));
+		try {
+			Thread.sleep(500);
+		}
+		catch(InterruptedException t) {
+			fail("Interrupted");
+		}
+		assertEquals(1,runtime.runners.size()); // No new runner.
+		runtime.runners.iterator().next().flagStop(); // Stop the existing runner
+		runtime.runners.clear();
+		try {
+			Thread.sleep(500);
+		}
+		catch(InterruptedException t) {
+			fail("Interrupted");
+		}
+		assertEquals(0,runtime.runners.size());
+
+		keyListener.keyPressed(new KeyEvent(new Component() {}, KeyEvent.KEY_PRESSED, System.currentTimeMillis(), 0, KeyEvent.VK_0, '0'));
+		try {
+			Thread.sleep(500);
+		}
+		catch(InterruptedException t) {
+			fail("Interrupted");
+		}
+		assertEquals(1,runtime.runners.size()); // New runner was created.
+		runtime.runners.iterator().next().flagStop();
+		runtime.runners.clear();
+	}
 	
 	public static class KeyReportingRuntime extends AllBadRuntime{
 		public HashSet<KeyListener> listeners = new HashSet<>();
+		public HashSet<ScriptTupleRunner> runners = new HashSet<>();
 		public ScriptTuple scriptRun = null;
 		public boolean isAtomic;
+		private boolean isJoining = false;
+
+		public KeyReportingRuntime(boolean isJoining) {
+			this.isJoining = isJoining;
+		}
 
 		/* (non-Javadoc)
 		 * @see com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRuntime#addKeyListener(java.awt.event.KeyListener)
@@ -279,7 +338,15 @@ class WhenKeyPressedTest {
 		public ScriptTupleRunner startScript(ScriptTuple script, boolean isAtomic) {
 			this.scriptRun = script;
 			this.isAtomic = isAtomic;
-			return new UnjoiningScriptTupleRunner();
+			ScriptTupleRunner retval;
+			if(isJoining) {
+				retval = new JoiningScriptTupleRunner();
+				runners.add(retval);
+			}
+			else {
+				retval = new UnjoiningScriptTupleRunner();
+			}
+			return retval;
 		}
 	}
 	
@@ -297,6 +364,35 @@ class WhenKeyPressedTest {
 		 */
 		@Override
 		public void join() throws InterruptedException {
+		}
+	}
+	
+	public static class JoiningScriptTupleRunner extends AllBadRunner {
+		private final Object LOCK = new Object();
+
+		@Override
+		public void flagStop() {
+			synchronized(LOCK) {
+				LOCK.notifyAll();
+			}
+		}
+
+		/* (non-Javadoc)
+		 * @see com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRunner#join(long, int)
+		 */
+		@Override
+		public void join(long millis, int nanos) throws InterruptedException {
+			Thread.sleep(millis);
+		}
+
+		/* (non-Javadoc)
+		 * @see com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRunner#join()
+		 */
+		@Override
+		public void join() throws InterruptedException {
+			synchronized(LOCK) {
+				LOCK.wait();
+			}
 		}
 	}
 }

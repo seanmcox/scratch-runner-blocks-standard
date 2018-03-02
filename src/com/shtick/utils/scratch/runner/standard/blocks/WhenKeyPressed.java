@@ -5,11 +5,13 @@ package com.shtick.utils.scratch.runner.standard.blocks;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.TreeMap;
 
 import com.shtick.utils.scratch.runner.core.OpcodeHat;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
+import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
 import com.shtick.utils.scratch.runner.standard.StandardBlocksExtensions;
 
@@ -19,6 +21,7 @@ import com.shtick.utils.scratch.runner.standard.StandardBlocksExtensions;
  */
 public class WhenKeyPressed implements OpcodeHat {
 	private TreeMap<String,java.util.List<ScriptTuple>> listeners = new TreeMap<>();
+	private HashMap<ScriptTuple,ScriptTupleRunner> scriptTupleRunners = new HashMap<>();
 
 	/* (non-Javadoc)
 	 * @see com.shtick.utils.scratch.runner.core.Opcode#getOpcode()
@@ -55,14 +58,36 @@ public class WhenKeyPressed implements OpcodeHat {
 				java.util.List<ScriptTuple> l;
 				synchronized(listeners) {
 					l = listeners.get(keyID);
-					if(l!=null)
-						for(ScriptTuple script:l)
-							runtime.startScript(script, false);
+					if(l!=null) {
+						for(ScriptTuple script:l) {
+							if(!scriptTupleRunners.containsKey(script)) {
+								scriptTupleRunners.put(script, runtime.startScript(script, false));
+								new Thread(()->{
+									try {
+										scriptTupleRunners.get(script).join();
+									}
+									catch(InterruptedException t) {}
+									scriptTupleRunners.remove(script);
+								}).start();
+							}
+						}
+					}
 					l = listeners.get("any");
 				}
-				if(l!=null)
-					for(ScriptTuple script:l)
-						runtime.startScript(script, false);
+				if(l!=null) {
+					for(ScriptTuple script:l) {
+						if(!scriptTupleRunners.containsKey(script)) {
+							scriptTupleRunners.put(script, runtime.startScript(script, false));
+							new Thread(()->{
+								try {
+									scriptTupleRunners.get(script).join();
+								}
+								catch(InterruptedException t) {}
+								scriptTupleRunners.remove(script);
+							}).start();
+						}
+					}
+				}
 			}
 		});
 	}
