@@ -5,7 +5,6 @@
 	<classpathentry kind="src" output="testBin" path="test"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Scratch Runner Core"/>
 	<classpathentry kind="lib" path="dist/install/felix.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/Image Utils"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
