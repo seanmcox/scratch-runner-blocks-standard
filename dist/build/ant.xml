@@ -18,7 +18,6 @@
                 <attribute name="Import-Package" value="org.osgi.framework,com.shtick.utils.scratch.runner.core,com.shtick.utils.scratch.runner.core.elements,com.shtick.utils.scratch.runner.core.elements.control"/>
             </manifest>
             <fileset dir="../../bin"/>
-            <fileset dir="../../../Image Utils/bin"/>
         	
         </jar>
     </target>
