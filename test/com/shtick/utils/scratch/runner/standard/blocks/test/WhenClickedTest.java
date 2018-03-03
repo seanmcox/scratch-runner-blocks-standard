@@ -178,13 +178,13 @@ class WhenClickedTest {
 		public RenderableChild[] renderableChildren;
 		private boolean isJoining = false;
 
+		public ClickReportingRuntime(boolean isJoining) {
+			this.isJoining = isJoining;
+		}
+
 		@Override
 		public RenderableChild[] getAllRenderableChildren() {
 			return renderableChildren;
-		}
-
-		public ClickReportingRuntime(boolean isJoining) {
-			this.isJoining = isJoining;
 		}
 
 		@Override

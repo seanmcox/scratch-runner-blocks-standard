@@ -28,7 +28,7 @@ class WhenSceneStartsTest {
 	void testApplicationStarted() {
 		WhenSceneStarts op = new WhenSceneStarts();
 
-		StageReportingRuntime runtime = new StageReportingRuntime();
+		StageReportingRuntime runtime = new StageReportingRuntime(false);
 		assertEquals(0,runtime.stage.listeners.size());
 		op.applicationStarted(runtime);
 		assertEquals(1,runtime.stage.listeners.size());
@@ -39,7 +39,7 @@ class WhenSceneStartsTest {
 		WhenSceneStarts op = new WhenSceneStarts();
 
 		{ // Test expected use case
-			StageReportingRuntime runtime = new StageReportingRuntime();
+			StageReportingRuntime runtime = new StageReportingRuntime(false);
 			op.applicationStarted(runtime);
 			StageListener stageListener = runtime.stage.listeners.iterator().next();
 			Object notifier = WhenSceneStarts.getSceneEventNotifier("new");
@@ -69,7 +69,7 @@ class WhenSceneStartsTest {
 		}
 
 		{ // Test misuse failure
-			StageReportingRuntime runtime = new StageReportingRuntime();
+			StageReportingRuntime runtime = new StageReportingRuntime(false);
 			op.applicationStarted(runtime);
 			StageListener stageListener = runtime.stage.listeners.iterator().next();
 			Object notifier = WhenSceneStarts.getSceneEventNotifier("new");
@@ -104,7 +104,7 @@ class WhenSceneStartsTest {
 	void testRegisterUnregister() {
 		{ // Test expected use case
 			WhenSceneStarts op = new WhenSceneStarts();
-			StageReportingRuntime runtime = new StageReportingRuntime();
+			StageReportingRuntime runtime = new StageReportingRuntime(false);
 			op.applicationStarted(runtime);
 			StageListener stageListener = runtime.stage.listeners.iterator().next();
 			ScriptTuple newScriptTuple = new AllBadScriptTuple();
@@ -201,7 +201,7 @@ class WhenSceneStartsTest {
 		
 		{ // test unregister wrong name case.
 			WhenSceneStarts op = new WhenSceneStarts();
-			StageReportingRuntime runtime = new StageReportingRuntime();
+			StageReportingRuntime runtime = new StageReportingRuntime(false);
 			op.applicationStarted(runtime);
 			StageListener stageListener = runtime.stage.listeners.iterator().next();
 			ScriptTuple newScriptTuple = new AllBadScriptTuple();
@@ -271,7 +271,7 @@ class WhenSceneStartsTest {
 		
 		{ // test register wrong name case.
 			WhenSceneStarts op = new WhenSceneStarts();
-			StageReportingRuntime runtime = new StageReportingRuntime();
+			StageReportingRuntime runtime = new StageReportingRuntime(false);
 			op.applicationStarted(runtime);
 			StageListener stageListener = runtime.stage.listeners.iterator().next();
 			ScriptTuple newScriptTuple = new AllBadScriptTuple();
@@ -313,7 +313,7 @@ class WhenSceneStartsTest {
 		
 		{ // test register with bad parameters
 			WhenSceneStarts op = new WhenSceneStarts();
-			StageReportingRuntime runtime = new StageReportingRuntime();
+			StageReportingRuntime runtime = new StageReportingRuntime(false);
 			op.applicationStarted(runtime);
 			ScriptTuple newScriptTuple = new AllBadScriptTuple();
 			
@@ -338,7 +338,7 @@ class WhenSceneStartsTest {
 		
 		{ // test unregister with bad parameters
 			WhenSceneStarts op = new WhenSceneStarts();
-			StageReportingRuntime runtime = new StageReportingRuntime();
+			StageReportingRuntime runtime = new StageReportingRuntime(false);
 			op.applicationStarted(runtime);
 			ScriptTuple newScriptTuple = new AllBadScriptTuple();
 			
@@ -362,11 +362,64 @@ class WhenSceneStartsTest {
 			}
 		}
 	}
+
+	@SuppressWarnings("serial")
+	@Test
+	void testConcurrency() {
+		WhenSceneStarts op = new WhenSceneStarts();
+		StageReportingRuntime runtime = new StageReportingRuntime(true);
+		op.applicationStarted(runtime);
+		StageListener stageListener = runtime.stage.listeners.iterator().next();
+		ScriptTuple scriptTuple = new AllBadScriptTuple();
+
+		assertEquals(0,runtime.runners.size());
+
+		op.registerListeningScript(scriptTuple, new Object[] {"new"});
+		// Run registered
+		Object notifier = WhenSceneStarts.getSceneEventNotifier("new");
+		synchronized(notifier) {
+			stageListener.sceneChanged(0, "old", 1, "new");
+			try {
+				notifier.wait(500);
+			}
+			catch(InterruptedException t) {
+				fail("Interrupted");
+			}
+		}
+		assertEquals(scriptTuple, runtime.scriptRun);
+
+		assertEquals(1,runtime.runners.size()); // Runner was created.
+		ScriptTupleRunner oldRunner = runtime.runners.iterator().next();
+		assertFalse(oldRunner.isStopFlagged());
+
+		notifier = WhenSceneStarts.getSceneEventNotifier("new");
+		synchronized(notifier) {
+			stageListener.sceneChanged(0, "old", 1, "new");
+			try {
+				notifier.wait(500);
+			}
+			catch(InterruptedException t) {
+				fail("Interrupted");
+			}
+		}
+		assertEquals(2,runtime.runners.size()); // Runner was created.
+		assertTrue(oldRunner.isStopFlagged());
+		runtime.runners.remove(oldRunner);
+		oldRunner = runtime.runners.iterator().next();
+		assertFalse(oldRunner.isStopFlagged());
+		oldRunner.flagStop();
+	}
 	
 	public static class StageReportingRuntime extends AllBadRuntime{
 		public SceneReportingStage stage = new SceneReportingStage();
+		public HashSet<ScriptTupleRunner> runners = new HashSet<>();
 		public ScriptTuple scriptRun = null;
 		public boolean isAtomic;
+		private boolean isJoining = false;
+
+		public StageReportingRuntime(boolean isJoining) {
+			this.isJoining = isJoining;
+		}
 
 		/* (non-Javadoc)
 		 * @see com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRuntime#getCurrentStage()
@@ -383,7 +436,15 @@ class WhenSceneStartsTest {
 		public ScriptTupleRunner startScript(ScriptTuple script, boolean isAtomic) {
 			this.scriptRun = script;
 			this.isAtomic = isAtomic;
-			return new UnjoiningScriptTupleRunner();
+			ScriptTupleRunner retval;
+			if(isJoining) {
+				retval = new JoiningScriptTupleRunner();
+				runners.add(retval);
+			}
+			else {
+				retval = new UnjoiningScriptTupleRunner();
+			}
+			return retval;
 		}
 	}
 	
@@ -421,6 +482,42 @@ class WhenSceneStartsTest {
 		 */
 		@Override
 		public void join() throws InterruptedException {
+		}
+	}
+	
+	public static class JoiningScriptTupleRunner extends AllBadRunner {
+		private final Object LOCK = new Object();
+		private boolean stopFlagged = false;
+
+		@Override
+		public void flagStop() {
+			synchronized(LOCK) {
+				LOCK.notifyAll();
+				stopFlagged = true;
+			}
+		}
+
+		@Override
+		public boolean isStopFlagged() {
+			return stopFlagged;
+		}
+
+		/* (non-Javadoc)
+		 * @see com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRunner#join(long, int)
+		 */
+		@Override
+		public void join(long millis, int nanos) throws InterruptedException {
+			Thread.sleep(millis);
+		}
+
+		/* (non-Javadoc)
+		 * @see com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRunner#join()
+		 */
+		@Override
+		public void join() throws InterruptedException {
+			synchronized(LOCK) {
+				LOCK.wait();
+			}
 		}
 	}
 }
