@@ -8,10 +8,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import com.shtick.utils.scratch.runner.core.OpcodeHat;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
+import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.elements.RenderableChild;
 import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
 import com.shtick.utils.scratch.runner.core.elements.Sprite;
@@ -24,6 +26,7 @@ import com.shtick.utils.scratch.runner.core.elements.Sprite;
  */
 public class WhenClicked implements OpcodeHat {
 	private LinkedList<ScriptTuple> listeners = new LinkedList<>();
+	private HashMap<ScriptTuple,ScriptTupleRunner> scriptTupleRunners = new HashMap<>();
 
 	/* (non-Javadoc)
 	 * @see com.shtick.utils.scratch.runner.core.Opcode#getOpcode()
@@ -76,25 +79,53 @@ public class WhenClicked implements OpcodeHat {
 				}
 				if(clicked.size()>0) {
 					RenderableChild[] children = runtime.getAllRenderableChildren();
-					ScriptTuple topTouched=null;
+					RenderableChild topTouched=null;
 					for(RenderableChild child:children) {
 						if(!(child instanceof Sprite))
 							continue;
-						ScriptTuple clickScript = null;
 						for(ScriptTuple script:clicked) {
 							if(script.getContext() == child) {
-								clickScript = script;
+								topTouched = child;
 								break;
 							}
 						}
-						if(clickScript == null)
-							continue;
-						clicked.remove(clickScript);
-						topTouched = clickScript;
 					}
 					if(topTouched==null)
 						return;
-					runtime.startScript(topTouched, false);
+					for(ScriptTuple script:clicked) {
+						if(script.getContext() == topTouched) {
+							synchronized(scriptTupleRunners) {
+								if(scriptTupleRunners.containsKey(script)) {
+									synchronized(scriptTupleRunners.get(script)) {
+										scriptTupleRunners.get(script).flagStop();
+									}
+								}
+							}
+							synchronized(scriptTupleRunners) {
+								scriptTupleRunners.put(script, runtime.startScript(script, false));
+							}
+							Runnable runnable = new Runnable() {
+								ScriptTuple s = script;
+								
+								@Override
+								public void run() {
+									ScriptTupleRunner runner;
+									synchronized(scriptTupleRunners) {
+										runner = scriptTupleRunners.get(s);
+									}
+									try {
+										runner.join();
+									}
+									catch(InterruptedException t) {}
+									synchronized(scriptTupleRunners) {
+										if(scriptTupleRunners.get(s) == runner)
+											scriptTupleRunners.remove(s);
+									}
+								}
+							};
+							new Thread(runnable).start();
+						}
+					}
 				}
 			}
 		});
