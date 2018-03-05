@@ -50,7 +50,7 @@ public class SetVarTo implements OpcodeAction {
 				System.out.println(((ProcDef.ProcedureContext)context).getProcName());
 			if(arguments[1] instanceof BlockTuple) {
 				System.out.println(((BlockTuple)arguments[1]).getOpcode());
-				System.out.println(Arrays.toString(((BlockTuple)arguments[1]).getArguments()));
+				System.out.println(Arrays.toString(((BlockTuple)arguments[1]).getArguments().toArray()));
 			}
 			System.out.println("Setting "+s0+" to "+val1);
 		}

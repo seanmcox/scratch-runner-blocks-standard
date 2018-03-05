@@ -3,13 +3,9 @@
  */
 package com.shtick.utils.scratch.runner.standard.blocks;
 
-import java.util.HashMap;
-
 import com.shtick.utils.scratch.runner.core.OpcodeValue;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
-import com.shtick.utils.scratch.runner.core.StageListener;
-import com.shtick.utils.scratch.runner.core.ValueListener;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 import com.shtick.utils.scratch.runner.core.elements.Stage;
 
@@ -18,8 +14,6 @@ import com.shtick.utils.scratch.runner.core.elements.Stage;
  *
  */
 public class BackgroundIndex implements OpcodeValue {
-	HashMap<ValueListener, StageListener> listeners = new HashMap<>();
-
 	/* (non-Javadoc)
 	 * @see com.shtick.utils.scratch.runner.core.Opcode#getOpcode()
 	 */
@@ -46,30 +40,4 @@ public class BackgroundIndex implements OpcodeValue {
 			return 0;
 		return stage.getContextPropertyValueByName("background#");
 	}
-
-	/* (non-Javadoc)
-	 * @see com.shtick.utils.scratch.runner.core.OpcodeValue#addValueListener(com.shtick.utils.scratch.runner.core.ValueListener)
-	 */
-	@Override
-	public void addValueListener(ValueListener valueListener) {
-		StageListener stageListener = new StageListener() {
-			
-			@Override
-			public void sceneChanged(int oldSceneIndex, String oldSceneName, int newSceneIndex, String newSceneName) {
-				valueListener.valueUpdated(oldSceneIndex, newSceneIndex);
-			}
-		};
-		valueListener.getRuntime().getCurrentStage().addStageListener(stageListener);
-		listeners.put(valueListener,stageListener);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.shtick.utils.scratch.runner.core.OpcodeValue#removeValueListener(com.shtick.utils.scratch.runner.core.ValueListener)
-	 */
-	@Override
-	public void removeValueListener(ValueListener valueListener) {
-		valueListener.getRuntime().getCurrentStage().removeStageListener(listeners.get(valueListener));
-		listeners.remove(valueListener);
-	}
-
 }

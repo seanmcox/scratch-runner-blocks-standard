@@ -40,8 +40,8 @@ public class DoForever implements OpcodeControl {
 	 * @see com.shtick.utils.scratch.runner.core.OpcodeControl#execute(java.lang.Object[])
 	 */
 	@Override
-	public BlockTuple[] execute(Object[] arguments) {
-		java.util.List<BlockTuple> subtuples = (java.util.List<BlockTuple>)arguments[0];
+	public BlockTuple[] execute(java.util.List<Object> arguments) {
+		java.util.List<BlockTuple> subtuples = (java.util.List<BlockTuple>)arguments.get(0);
 		BlockTuple[] retval = subtuples.toArray(new BlockTuple[subtuples.size()+1]);
 		retval[retval.length-1] = new BasicJumpBlockTuple(0);
 		return retval;

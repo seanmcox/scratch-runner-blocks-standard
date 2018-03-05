@@ -9,7 +9,6 @@ import com.shtick.utils.scratch.runner.standard.blocks.ProcDef;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRunner;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRuntime;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadSprite;
-import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadValueListener;
 
 class GetParamTest {
 
@@ -54,13 +53,5 @@ class GetParamTest {
 		{
 			op.execute(new AllBadRuntime(), new AllBadRunner(), context, new Object[] {"test",null});
 		}
-	}
-
-	@Test
-	void testListener() {
-		GetParam op = new GetParam();
-		AllBadValueListener listener = new AllBadValueListener();
-		op.addValueListener(listener);
-		op.removeValueListener(listener);
 	}
 }

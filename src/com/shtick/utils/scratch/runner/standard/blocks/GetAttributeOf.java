@@ -6,7 +6,6 @@ package com.shtick.utils.scratch.runner.standard.blocks;
 import com.shtick.utils.scratch.runner.core.OpcodeValue;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
-import com.shtick.utils.scratch.runner.core.ValueListener;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 
 /**
@@ -38,23 +37,4 @@ public class GetAttributeOf implements OpcodeValue {
 	public Object execute(ScratchRuntime runtime, ScriptTupleRunner runner, ScriptContext context, Object[] arguments) {
 		return runtime.getScriptContextByName((String)arguments[1]).getContextPropertyValueByName((String)arguments[0]);
 	}
-
-	/* (non-Javadoc)
-	 * @see com.shtick.utils.scratch.runner.core.OpcodeValue#addValueListener(com.shtick.utils.scratch.runner.core.ValueListener)
-	 */
-	@Override
-	public void addValueListener(ValueListener valueListener) {
-		Object[] arguments = valueListener.getArguments();
-		valueListener.getRuntime().getScriptContextByName((String)arguments[1]).addContextPropertyListener((String)arguments[0], valueListener);
-	}
-
-	/* (non-Javadoc)
-	 * @see com.shtick.utils.scratch.runner.core.OpcodeValue#removeValueListener(com.shtick.utils.scratch.runner.core.ValueListener)
-	 */
-	@Override
-	public void removeValueListener(ValueListener valueListener) {
-		Object[] arguments = valueListener.getArguments();
-		valueListener.getRuntime().getScriptContextByName((String)arguments[1]).addContextPropertyListener((String)arguments[0], valueListener);
-	}
-
 }

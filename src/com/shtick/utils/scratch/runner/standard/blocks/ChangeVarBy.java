@@ -58,7 +58,7 @@ public class ChangeVarBy implements OpcodeAction {
 				System.out.println(((ProcDef.ProcedureContext)context).getProcName());
 			if(arguments[1] instanceof BlockTuple) {
 				System.out.println(((BlockTuple)arguments[1]).getOpcode());
-				System.out.println(Arrays.toString(((BlockTuple)arguments[1]).getArguments()));
+				System.out.println(Arrays.toString(((BlockTuple)arguments[1]).getArguments().toArray()));
 			}
 			System.out.println("Changing "+s0+" by "+n1+" (old value: "+oldValue+")");
 		}

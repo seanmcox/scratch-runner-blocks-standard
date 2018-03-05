@@ -34,9 +34,9 @@ public class DoWaitUntil implements OpcodeControl {
 	 * @see com.shtick.utils.scratch.runner.core.OpcodeControl#execute(java.lang.Object[])
 	 */
 	@Override
-	public BlockTuple[] execute(Object[] arguments) {
+	public BlockTuple[] execute(java.util.List<Object> arguments) {
 		BlockTuple[] retval = new BlockTuple[2];
-		retval[0] = new TestBlockTuple(arguments[0]);
+		retval[0] = new TestBlockTuple(arguments.get(0));
 		retval[1] = new FalseJumpBlockTuple(0);
 		return retval;
 	}

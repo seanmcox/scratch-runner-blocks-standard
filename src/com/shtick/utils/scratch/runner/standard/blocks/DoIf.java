@@ -3,17 +3,9 @@
  */
 package com.shtick.utils.scratch.runner.standard.blocks;
 
-import com.shtick.utils.scratch.runner.core.Opcode.DataType;
-import com.shtick.utils.scratch.runner.core.OpcodeAction;
 import com.shtick.utils.scratch.runner.core.OpcodeControl;
-import com.shtick.utils.scratch.runner.core.OpcodeUtils;
-import com.shtick.utils.scratch.runner.core.ScratchRuntime;
-import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.elements.BlockTuple;
-import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
-import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
 import com.shtick.utils.scratch.runner.core.elements.control.FalseJumpBlockTuple;
-import com.shtick.utils.scratch.runner.core.elements.control.JumpBlockTuple;
 import com.shtick.utils.scratch.runner.core.elements.control.TestBlockTuple;
 
 /**
@@ -42,10 +34,14 @@ public class DoIf implements OpcodeControl{
 	 * @see com.shtick.utils.scratch.runner.core.OpcodeControl#execute(java.lang.Object[])
 	 */
 	@Override
-	public BlockTuple[] execute(Object[] arguments) {
-		java.util.List<BlockTuple> subtuples = (java.util.List<BlockTuple>)arguments[1];
+	public BlockTuple[] execute(java.util.List<Object> arguments) {
+		java.util.List<BlockTuple> subtuples = (java.util.List<BlockTuple>)arguments.get(1);
+		if(subtuples==null) {
+			System.err.println("WARNING: \""+getOpcode()+"\": doIf found with empty execution block.");
+			return new BlockTuple[0];
+		}
 		BlockTuple[] retval = new BlockTuple[subtuples.size()+2];
-		retval[0] = new TestBlockTuple(arguments[0]);
+		retval[0] = new TestBlockTuple(arguments.get(0));
 		retval[1] = new FalseJumpBlockTuple(retval.length);
 		int i=2;
 		for(BlockTuple subtuple:subtuples) {

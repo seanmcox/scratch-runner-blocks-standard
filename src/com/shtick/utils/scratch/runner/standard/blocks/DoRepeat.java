@@ -3,18 +3,13 @@
  */
 package com.shtick.utils.scratch.runner.standard.blocks;
 
-import com.shtick.utils.scratch.runner.core.Opcode.DataType;
-import com.shtick.utils.scratch.runner.core.OpcodeAction;
+import java.util.Arrays;
+import java.util.Collections;
+
 import com.shtick.utils.scratch.runner.core.OpcodeControl;
-import com.shtick.utils.scratch.runner.core.OpcodeUtils;
-import com.shtick.utils.scratch.runner.core.ScratchRuntime;
-import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.elements.BlockTuple;
-import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
-import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
 import com.shtick.utils.scratch.runner.core.elements.control.BasicJumpBlockTuple;
 import com.shtick.utils.scratch.runner.core.elements.control.ChangeLocalVarByBlockTuple;
-import com.shtick.utils.scratch.runner.core.elements.control.JumpBlockTuple;
 import com.shtick.utils.scratch.runner.core.elements.control.ReadLocalVarBlockTuple;
 import com.shtick.utils.scratch.runner.core.elements.control.SetLocalVarBlockTuple;
 import com.shtick.utils.scratch.runner.core.elements.control.TrueJumpBlockTuple;
@@ -45,12 +40,13 @@ public class DoRepeat implements OpcodeControl {
 	 * @see com.shtick.utils.scratch.runner.core.OpcodeControl#execute(java.lang.Object[])
 	 */
 	@Override
-	public BlockTuple[] execute(Object[] arguments) {
-		java.util.List<BlockTuple> subtuples = (java.util.List<BlockTuple>)arguments[1];
+	public BlockTuple[] execute(java.util.List<Object> arguments) {
+		java.util.List<BlockTuple> subtuples = (java.util.List<BlockTuple>)arguments.get(1);
 		BlockTuple[] retval = new BlockTuple[subtuples.size()+5];
 		BlockTuple readVar = new ReadLocalVarBlockTuple(0);
 		BlockTuple setVar = new SetLocalVarBlockTuple(0, 1);
 		BlockTuple test = new BlockTuple() {
+			java.util.List<Object> args = Collections.unmodifiableList(Arrays.asList(readVar,arguments.get(0)));
 			@Override
 			public Object[] toArray() {
 				return null;
@@ -60,8 +56,8 @@ public class DoRepeat implements OpcodeControl {
 				return _GreaterThan.OPCODE;
 			}
 			@Override
-			public Object[] getArguments() {
-				return new Object[] {readVar,arguments[0]};
+			public java.util.List<Object> getArguments() {
+				return args;
 			}
 		};
 		BlockTuple incrementVar = new ChangeLocalVarByBlockTuple(0, 1);

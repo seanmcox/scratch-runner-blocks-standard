@@ -6,7 +6,6 @@ package com.shtick.utils.scratch.runner.standard.blocks;
 import com.shtick.utils.scratch.runner.core.OpcodeValue;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
-import com.shtick.utils.scratch.runner.core.ValueListener;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 
 /**
@@ -38,19 +37,4 @@ public class GetUserName implements OpcodeValue {
 	public Object execute(ScratchRuntime runtime, ScriptTupleRunner runner, ScriptContext context, Object[] arguments) {
 		return System.getProperty("user.name");
 	}
-
-	/* (non-Javadoc)
-	 * @see com.shtick.utils.scratch.runner.core.OpcodeValue#addValueListener(com.shtick.utils.scratch.runner.core.ValueListener)
-	 */
-	@Override
-	public void addValueListener(ValueListener valueListener) {
-		// Never changes in any given context.
-	}
-
-	/* (non-Javadoc)
-	 * @see com.shtick.utils.scratch.runner.core.OpcodeValue#removeValueListener(com.shtick.utils.scratch.runner.core.ValueListener)
-	 */
-	@Override
-	public void removeValueListener(ValueListener valueListener) {}
-
 }
