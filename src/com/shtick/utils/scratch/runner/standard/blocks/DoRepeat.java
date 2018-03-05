@@ -12,6 +12,7 @@ import com.shtick.utils.scratch.runner.core.elements.control.BasicJumpBlockTuple
 import com.shtick.utils.scratch.runner.core.elements.control.ChangeLocalVarByBlockTuple;
 import com.shtick.utils.scratch.runner.core.elements.control.ReadLocalVarBlockTuple;
 import com.shtick.utils.scratch.runner.core.elements.control.SetLocalVarBlockTuple;
+import com.shtick.utils.scratch.runner.core.elements.control.TestBlockTuple;
 import com.shtick.utils.scratch.runner.core.elements.control.TrueJumpBlockTuple;
 
 /**
@@ -45,6 +46,7 @@ public class DoRepeat implements OpcodeControl {
 		BlockTuple[] retval = new BlockTuple[subtuples.size()+5];
 		BlockTuple readVar = new ReadLocalVarBlockTuple(0);
 		BlockTuple setVar = new SetLocalVarBlockTuple(0, 1);
+		
 		BlockTuple test = new BlockTuple() {
 			java.util.List<Object> args = Collections.unmodifiableList(Arrays.asList(readVar,arguments.get(0)));
 			@Override
@@ -62,7 +64,7 @@ public class DoRepeat implements OpcodeControl {
 		};
 		BlockTuple incrementVar = new ChangeLocalVarByBlockTuple(0, 1);
 		retval[0] = setVar;
-		retval[1] = test;
+		retval[1] = new TestBlockTuple(test);
 		retval[2] = new TrueJumpBlockTuple(retval.length);
 		int i=3;
 		for(BlockTuple subtuple:subtuples) {
