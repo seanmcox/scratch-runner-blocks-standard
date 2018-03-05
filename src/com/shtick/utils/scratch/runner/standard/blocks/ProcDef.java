@@ -10,7 +10,6 @@ import com.shtick.utils.scratch.runner.core.OpcodeHat;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.ValueListener;
-import com.shtick.utils.scratch.runner.core.elements.BlockTuple;
 import com.shtick.utils.scratch.runner.core.elements.List;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
@@ -136,34 +135,7 @@ public class ProcDef implements OpcodeHat {
 		for(int i=0;i<parameters.length;i++)
 			parameters[i] = params[i];
 		
-		ScriptTupleRunner childRunner = runtime.startScript(new ScriptTuple() {
-			ProcedureContext procedureContext = new ProcedureContext(context, procDef.getProcName(), procDef.getParamNames(), parameters);
-			
-			@Override
-			public Object[] toArray() {
-				return procDef.script.toArray();
-			}
-			
-			@Override
-			public ScriptContext getContext() {
-				return procedureContext;
-			}
-			
-			@Override
-			public java.util.List<BlockTuple> getBlockTuples() {
-				return procDef.script.getBlockTuples();
-			}
-			
-			@Override
-			public int getBlockTupleCount() {
-				return procDef.script.getBlockTupleCount();
-			}
-			
-			@Override
-			public BlockTuple getBlockTuple(int index) {
-				return procDef.script.getBlockTuple(index);
-			}
-		}, procDef.isAtomic());
+		ScriptTupleRunner childRunner = runtime.startScript(procDef.script.clone(new ProcedureContext(context, procDef.getProcName(), procDef.getParamNames(), parameters)), procDef.isAtomic());
 		try {
 			childRunner.join();
 		}

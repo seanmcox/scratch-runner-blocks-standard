@@ -55,4 +55,9 @@ public class AllBadScriptTuple implements ScriptTuple{
 		throw new UnsupportedOperationException("Called getContext when not expected.");
 	}
 
+	@Override
+	public ScriptTuple clone(ScriptContext context) {
+		throw new UnsupportedOperationException("Called clone when not expected.");
+	}
+
 }
