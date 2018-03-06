@@ -37,7 +37,7 @@ public class _GreaterThan extends AbstractOpcodeValue {
 	@Override
 	public Object execute(ScratchRuntime runtime, ScriptTupleRunner runner, ScriptContext context, Object[] arguments) {
 		Number n0 = (Number)arguments[0];
-		Number n1 = (Number)arguments[0];
+		Number n1 = (Number)arguments[1];
 		if((n0 instanceof Integer)&&(n1 instanceof Integer))
 			return n0.intValue()>n1.intValue();
 		return n0.doubleValue()>n1.doubleValue();

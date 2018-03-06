@@ -75,24 +75,4 @@ public class DoRepeat implements OpcodeControl {
 		retval[retval.length-1] = new BasicJumpBlockTuple(1);
 		return retval;
 	}
-
-//	/* (non-Javadoc)
-//	 * @see com.shtick.utils.scratch.runner.core.OpcodeAction#execute(com.shtick.utils.scratch.runner.core.ScratchRuntime, com.shtick.utils.scratch.runner.core.elements.ScriptContext, java.lang.Object[])
-//	 */
-//	@Override
-//	public void execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context, Object[] arguments) {
-//		if(arguments.length!=2)
-//			throw new IllegalArgumentException("2 arguments expected for "+getOpcode()+" opcode");
-//		if(!OpcodeUtils.isEvaluable(arguments[0]))
-//			throw new IllegalArgumentException("The first argument for opcode, "+getOpcode()+", must be evaluable.");
-//		if((!(arguments[1] instanceof java.util.List<?>))&&(arguments[1]!=null))
-//			throw new IllegalArgumentException("List of BlockTuples expected as second argument for "+getOpcode()+", but "+arguments[0].getClass().getCanonicalName()+" found.");
-//		Number n0 = OpcodeUtils.getNumericValue(arguments[0]);
-//		java.util.List<BlockTuple> subtuples = (java.util.List<BlockTuple>)arguments[1];
-//		int count = (n0 instanceof Integer)?n0.intValue():(int)Math.ceil(n0.doubleValue());
-//		for(int i = 0;i<count;i++)
-//			scriptRunner.runBlockTuples(context, subtuples);
-//		return;
-//	}
-
 }

@@ -13,9 +13,14 @@ import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
  */
 public class _LessThan extends AbstractOpcodeValue {
 	/**
+	 * 
+	 */
+	public static final String OPCODE = "<";
+
+	/**
 	 */
 	public _LessThan() {
-		super(2, "<");
+		super(2, OPCODE);
 	}
 
 	/* (non-Javadoc)
@@ -32,7 +37,7 @@ public class _LessThan extends AbstractOpcodeValue {
 	@Override
 	public Object execute(ScratchRuntime runtime, ScriptTupleRunner runner, ScriptContext context, Object[] arguments) {
 		Number n0 = (Number)arguments[0];
-		Number n1 = (Number)arguments[0];
+		Number n1 = (Number)arguments[1];
 		if((n0 instanceof Integer)&&(n1 instanceof Integer))
 			return n0.intValue()<n1.intValue();
 		return n0.doubleValue()<n1.doubleValue();

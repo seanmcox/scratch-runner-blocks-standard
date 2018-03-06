@@ -3,8 +3,6 @@
  */
 package com.shtick.utils.scratch.runner.standard.blocks.util;
 
-import java.util.List;
-
 import com.shtick.utils.scratch.runner.core.Opcode;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.elements.BlockTuple;
@@ -33,14 +31,6 @@ public class AllBadRunner implements ScriptTupleRunner {
 	}
 
 	/* (non-Javadoc)
-	 * @see com.shtick.utils.scratch.runner.core.ScriptTupleRunner#runBlockTuples(com.shtick.utils.scratch.runner.core.elements.ScriptContext, java.util.List)
-	 */
-	@Override
-	public void runBlockTuples(ScriptContext context, List<BlockTuple> script) {
-		throw new UnsupportedOperationException("Called runBlockTuples when not expected.");
-	}
-
-	/* (non-Javadoc)
 	 * @see com.shtick.utils.scratch.runner.core.ScriptTupleRunner#getOpcode(com.shtick.utils.scratch.runner.core.elements.BlockTuple)
 	 */
 	@Override
@@ -54,6 +44,11 @@ public class AllBadRunner implements ScriptTupleRunner {
 	@Override
 	public Opcode getCurrentOpcode() {
 		throw new UnsupportedOperationException("Called getCurrentOpcode when not expected.");
+	}
+
+	@Override
+	public ScriptContext getContext() {
+		throw new UnsupportedOperationException("Called getContext when not expected.");
 	}
 
 	/* (non-Javadoc)

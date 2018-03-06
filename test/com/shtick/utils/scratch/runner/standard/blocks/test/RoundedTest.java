@@ -98,5 +98,4 @@ class RoundedTest {
 			assertEquals(2,retval);
 		}
 	}
-	// TODO Test listener
 }

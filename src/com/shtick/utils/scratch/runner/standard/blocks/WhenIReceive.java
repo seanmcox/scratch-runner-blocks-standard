@@ -6,6 +6,7 @@ package com.shtick.utils.scratch.runner.standard.blocks;
 import java.util.LinkedList;
 import java.util.TreeMap;
 
+import com.shtick.utils.scratch.runner.core.Opcode;
 import com.shtick.utils.scratch.runner.core.OpcodeHat;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
@@ -89,7 +90,7 @@ public class WhenIReceive implements OpcodeHat {
 				runners.add(runtime.startScript(tuple, false));
 			for(ScriptTupleRunner runner:runners) {
 //				Opcode currentOpcode = runner.getCurrentOpcode();
-//				System.out.println("Broadcast of "+message+" waiting on "+runner+"\n\t"+((currentOpcode==null)?null:currentOpcode.getOpcode()));
+//				System.out.println("Broadcast of "+message+" waiting on "+runner.getContext().getObjName()+"\n\t"+((currentOpcode==null)?null:currentOpcode.getOpcode()));
 				try {
 					runner.join();
 				}
