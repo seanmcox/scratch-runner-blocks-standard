@@ -96,7 +96,7 @@ public class TimeAndDate implements StageMonitorCommand {
 		case "date":
 			return ""+now.getDayOfMonth();
 		case "day of week":
-			return ""+now.getDayOfWeek();
+			return ""+now.getDayOfWeek().getValue();
 		case "hour":
 			return ""+now.getHour();
 		case "minute":
