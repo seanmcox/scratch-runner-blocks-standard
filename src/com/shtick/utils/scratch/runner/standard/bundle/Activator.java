@@ -205,7 +205,21 @@ public class Activator implements BundleActivator {
 			runtimeRegistrations.add(context.registerService(GraphicEffect.class.getName(), new GhostEffect(),new Hashtable<String, String>()));
 			runtimeRegistrations.add(context.registerService(GraphicEffect.class.getName(), new MosaicEffect(),new Hashtable<String, String>()));
 
+			runtimeRegistrations.add(context.registerService(StageMonitorCommand.class.getName(), new com.shtick.utils.scratch.runner.standard.mcommands.Answer(),new Hashtable<String, String>()));
+			// TODO backgroundIndex
+			// TODO costumeIndex
 			runtimeRegistrations.add(context.registerService(StageMonitorCommand.class.getName(), new GetVar(),new Hashtable<String, String>()));
+			// TODO heading
+			// TODO scale
+			// TODO sceneName
+			// TODO senseVideoMotion
+			// TODO soundLevel
+			// TODO tempo
+			// TODO timeAndDate
+			// TODO timer
+			// TODO volume
+			// TODO xpos
+			// TODO ypos
 		}
     }
 
