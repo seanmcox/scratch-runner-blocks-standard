@@ -43,8 +43,7 @@ class _LessThanTest {
 		}
 
 		try {
-			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1});
-			assertEquals(2,retval);
+			op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1});
 			fail("Exception expected.");
 		}
 		catch (Exception t) {

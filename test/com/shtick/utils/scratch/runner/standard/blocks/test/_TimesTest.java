@@ -4,42 +4,32 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import com.shtick.utils.scratch.runner.standard.blocks._GreaterThan;
+import com.shtick.utils.scratch.runner.standard.blocks._Times;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRunner;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRuntime;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadSprite;
 
-class _GreaterThanTest {
+class _TimesTest {
 
 	@Test
 	void testOpcode() {
-		_GreaterThan op = new _GreaterThan();
-		assertEquals(">",op.getOpcode());
+		_Times op = new _Times();
+		assertEquals("*",op.getOpcode());
 	}
 
 	@Test
 	void testArgs() {
 		AllBadSprite sprite = new AllBadSprite();
-		_GreaterThan op = new _GreaterThan();
+		_Times op = new _Times();
 
-		{ // double > double, true
+		{ // double * double
 			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1.5,0.5});
-			assertEquals(true,retval);
+			assertEqualWithinMargin(0.75,((Number)retval).doubleValue(),0.00001);
 		}
 
-		{ // double > double, false
-			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {0.5,1.5});
-			assertEquals(false,retval);
-		}
-
-		{ // int > int, true
+		{ // int * int
 			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {2,1});
-			assertEquals(true,retval);
-		}
-
-		{ // int > int, false
-			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1,2});
-			assertEquals(false,retval);
+			assertEqualWithinMargin(2.0,((Number)retval).doubleValue(),0.00001);
 		}
 
 		try {
@@ -81,5 +71,10 @@ class _GreaterThanTest {
 		catch(Exception t) {
 			// Expected Result.
 		}
+	}
+
+	private static void assertEqualWithinMargin(double expected, double actual, double margin) {
+		assertTrue(actual>(expected-margin),"Actual value, "+actual+" not greater than lower bound, "+(expected-margin));
+		assertTrue(actual<(expected+margin),"Actual value, "+actual+" not less than upper bound, "+(expected+margin));
 	}
 }

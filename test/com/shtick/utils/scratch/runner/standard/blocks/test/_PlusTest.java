@@ -4,42 +4,32 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import com.shtick.utils.scratch.runner.standard.blocks._GreaterThan;
+import com.shtick.utils.scratch.runner.standard.blocks._Plus;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRunner;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRuntime;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadSprite;
 
-class _GreaterThanTest {
+class _PlusTest {
 
 	@Test
 	void testOpcode() {
-		_GreaterThan op = new _GreaterThan();
-		assertEquals(">",op.getOpcode());
+		_Plus op = new _Plus();
+		assertEquals("+",op.getOpcode());
 	}
 
 	@Test
 	void testArgs() {
 		AllBadSprite sprite = new AllBadSprite();
-		_GreaterThan op = new _GreaterThan();
+		_Plus op = new _Plus();
 
-		{ // double > double, true
-			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1.5,0.5});
-			assertEquals(true,retval);
+		{ // double + double
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1.5,0.8});
+			assertEqualWithinMargin(2.3,((Number)retval).doubleValue(),0.00001);
 		}
 
-		{ // double > double, false
-			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {0.5,1.5});
-			assertEquals(false,retval);
-		}
-
-		{ // int > int, true
+		{ // int + int
 			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {2,1});
-			assertEquals(true,retval);
-		}
-
-		{ // int > int, false
-			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1,2});
-			assertEquals(false,retval);
+			assertEqualWithinMargin(3.0,((Number)retval).doubleValue(),0.00001);
 		}
 
 		try {
@@ -81,5 +71,10 @@ class _GreaterThanTest {
 		catch(Exception t) {
 			// Expected Result.
 		}
+	}
+
+	private static void assertEqualWithinMargin(double expected, double actual, double margin) {
+		assertTrue(actual>(expected-margin),"Actual value, "+actual+" not greater than lower bound, "+(expected-margin));
+		assertTrue(actual<(expected+margin),"Actual value, "+actual+" not less than upper bound, "+(expected+margin));
 	}
 }
