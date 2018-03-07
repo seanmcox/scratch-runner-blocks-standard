@@ -5,11 +5,9 @@ package com.shtick.utils.scratch.runner.standard.mcommands;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.LinkedList;
 
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
-import com.shtick.utils.scratch.runner.core.StageListener;
 import com.shtick.utils.scratch.runner.core.StageMonitorCommand;
 import com.shtick.utils.scratch.runner.core.ValueListener;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
@@ -191,7 +189,7 @@ public class TimeAndDate implements StageMonitorCommand {
 		}
 	}
 	
-	public void updateTimerInfrequency() {
+	private void updateTimerInfrequency() {
 		synchronized(valueListeners) {
 			// Determine a new infrequency level. 
 			int i;
@@ -223,7 +221,7 @@ public class TimeAndDate implements StageMonitorCommand {
 		}
 	}
 	
-	public void changeTick() {
+	private void changeTick() {
 		synchronized(valueListeners) {
 			LocalDateTime now = LocalDateTime.now();
 			int nowReported[] = new int[] {
