@@ -212,6 +212,7 @@ public class Activator implements BundleActivator {
 			// TODO heading
 			// TODO scale
 			// TODO sceneName
+			runtimeRegistrations.add(context.registerService(StageMonitorCommand.class.getName(), new com.shtick.utils.scratch.runner.standard.mcommands.SceneName(),new Hashtable<String, String>()));
 			// TODO senseVideoMotion
 			// TODO soundLevel
 			// TODO tempo
