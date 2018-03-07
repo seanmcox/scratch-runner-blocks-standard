@@ -175,7 +175,7 @@ public class Activator implements BundleActivator {
 			// TODO tempo
 			runtimeRegistrations.add(context.registerService(Opcode.class.getName(), new Think(),new Hashtable<String, String>()));
 			runtimeRegistrations.add(context.registerService(Opcode.class.getName(), new ThinkDurationElapsedFrom(),new Hashtable<String, String>()));
-			// TODO timeAndDate
+			runtimeRegistrations.add(context.registerService(Opcode.class.getName(), new TimeAndDate(),new Hashtable<String, String>()));
 			runtimeRegistrations.add(context.registerService(Opcode.class.getName(), new Timer(),new Hashtable<String, String>()));
 			runtimeRegistrations.add(context.registerService(Opcode.class.getName(), new TimerReset(),new Hashtable<String, String>()));
 			// TODO timestamp
@@ -211,12 +211,11 @@ public class Activator implements BundleActivator {
 			runtimeRegistrations.add(context.registerService(StageMonitorCommand.class.getName(), new GetVar(),new Hashtable<String, String>()));
 			// TODO heading
 			// TODO scale
-			// TODO sceneName
 			runtimeRegistrations.add(context.registerService(StageMonitorCommand.class.getName(), new com.shtick.utils.scratch.runner.standard.mcommands.SceneName(),new Hashtable<String, String>()));
 			// TODO senseVideoMotion
 			// TODO soundLevel
 			// TODO tempo
-			// TODO timeAndDate
+			runtimeRegistrations.add(context.registerService(StageMonitorCommand.class.getName(), new com.shtick.utils.scratch.runner.standard.mcommands.TimeAndDate(),new Hashtable<String, String>()));
 			// TODO timer
 			// TODO volume
 			// TODO xpos
