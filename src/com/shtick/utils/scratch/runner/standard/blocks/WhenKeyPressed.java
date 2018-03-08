@@ -55,6 +55,8 @@ public class WhenKeyPressed implements OpcodeHat {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				String keyID = StandardBlocksExtensions.getKeyIdForEvent(e);
+				if(keyID == null)
+					return;
 				java.util.List<ScriptTuple> l;
 				synchronized(listeners) {
 					l = listeners.get(keyID);
