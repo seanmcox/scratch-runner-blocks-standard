@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
+import com.shtick.utils.scratch.runner.core.Opcode.DataType;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 import com.shtick.utils.scratch.runner.standard.blocks.BounceOffEdge;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRunner;
@@ -20,6 +21,12 @@ class BounceOffEdgeTest {
 	void testOpcode() {
 		BounceOffEdge op = new BounceOffEdge();
 		assertEquals("bounceOffEdge",op.getOpcode());
+	}
+
+	@Test
+	void testArgumentTypes() {
+		BounceOffEdge op = new BounceOffEdge();
+		assertArrayEquals(new DataType[] {}, op.getArgumentTypes());
 	}
 
 	@Test

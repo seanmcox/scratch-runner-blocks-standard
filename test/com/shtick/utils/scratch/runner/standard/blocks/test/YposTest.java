@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import org.junit.jupiter.api.Test;
 
 import com.shtick.utils.scratch.runner.core.SpriteListener;
+import com.shtick.utils.scratch.runner.core.Opcode.DataType;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 import com.shtick.utils.scratch.runner.standard.blocks.Ypos;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRunner;
@@ -19,6 +20,12 @@ class YposTest {
 	void testOpcode() {
 		Ypos op = new Ypos();
 		assertEquals("ypos",op.getOpcode());
+	}
+
+	@Test
+	void testArgumentTypes() {
+		Ypos op = new Ypos();
+		assertArrayEquals(new DataType[] {}, op.getArgumentTypes());
 	}
 
 	@Test

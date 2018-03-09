@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 
+import com.shtick.utils.scratch.runner.core.Opcode.DataType;
 import com.shtick.utils.scratch.runner.standard.blocks.TimeAndDate;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRunner;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRuntime;
@@ -17,6 +18,12 @@ class TimeAndDateTest {
 	void testOpcode() {
 		TimeAndDate op = new TimeAndDate();
 		assertEquals("timeAndDate",op.getOpcode());
+	}
+
+	@Test
+	void testArgumentTypes() {
+		TimeAndDate op = new TimeAndDate();
+		assertArrayEquals(new DataType[] {DataType.STRING}, op.getArgumentTypes());
 	}
 
 	@Test

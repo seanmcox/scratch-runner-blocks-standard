@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.StageListener;
+import com.shtick.utils.scratch.runner.core.Opcode.DataType;
 import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
 import com.shtick.utils.scratch.runner.core.elements.Stage;
 import com.shtick.utils.scratch.runner.standard.blocks.WhenSceneStarts;
@@ -22,6 +23,12 @@ class WhenSceneStartsTest {
 	void testOpcode() {
 		WhenSceneStarts op = new WhenSceneStarts();
 		assertEquals("whenSceneStarts",op.getOpcode());
+	}
+
+	@Test
+	void testArgumentTypes() {
+		WhenSceneStarts op = new WhenSceneStarts();
+		assertArrayEquals(new DataType[] {DataType.STRING}, op.getArgumentTypes());
 	}
 
 	@Test

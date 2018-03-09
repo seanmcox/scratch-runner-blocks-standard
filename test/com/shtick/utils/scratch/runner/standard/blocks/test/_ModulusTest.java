@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import com.shtick.utils.scratch.runner.core.Opcode.DataType;
 import com.shtick.utils.scratch.runner.standard.blocks._Modulus;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRunner;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRuntime;
@@ -15,6 +16,12 @@ class _ModulusTest {
 	void testOpcode() {
 		_Modulus op = new _Modulus();
 		assertEquals("%",op.getOpcode());
+	}
+
+	@Test
+	void testArgumentTypes() {
+		_Modulus op = new _Modulus();
+		assertArrayEquals(new DataType[] {DataType.NUMBER,DataType.NUMBER}, op.getArgumentTypes());
 	}
 
 	@Test

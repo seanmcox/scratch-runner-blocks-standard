@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import com.shtick.utils.scratch.runner.core.Opcode.DataType;
 import com.shtick.utils.scratch.runner.standard.blocks.GetParam;
 import com.shtick.utils.scratch.runner.standard.blocks.ProcDef;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRunner;
@@ -16,6 +17,12 @@ class GetParamTest {
 	void testOpcode() {
 		GetParam op = new GetParam();
 		assertEquals("getParam",op.getOpcode());
+	}
+
+	@Test
+	void testArgumentTypes() {
+		GetParam op = new GetParam();
+		assertArrayEquals(new DataType[] {DataType.STRING,DataType.STRING}, op.getArgumentTypes());
 	}
 
 	@Test

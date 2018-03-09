@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import com.shtick.utils.scratch.runner.core.Opcode.DataType;
 import com.shtick.utils.scratch.runner.standard.blocks.Rounded;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRunner;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRuntime;
@@ -15,6 +16,12 @@ class RoundedTest {
 	void testOpcode() {
 		Rounded op = new Rounded();
 		assertEquals("rounded",op.getOpcode());
+	}
+
+	@Test
+	void testArgumentTypes() {
+		Rounded op = new Rounded();
+		assertArrayEquals(new DataType[] {DataType.NUMBER}, op.getArgumentTypes());
 	}
 
 	@Test

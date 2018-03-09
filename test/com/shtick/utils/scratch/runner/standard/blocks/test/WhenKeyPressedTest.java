@@ -10,6 +10,7 @@ import java.util.HashSet;
 import org.junit.jupiter.api.Test;
 
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
+import com.shtick.utils.scratch.runner.core.Opcode.DataType;
 import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
 import com.shtick.utils.scratch.runner.standard.blocks.WhenKeyPressed;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRunner;
@@ -22,6 +23,12 @@ class WhenKeyPressedTest {
 	void testOpcode() {
 		WhenKeyPressed op = new WhenKeyPressed();
 		assertEquals("whenKeyPressed",op.getOpcode());
+	}
+
+	@Test
+	void testArgumentTypes() {
+		WhenKeyPressed op = new WhenKeyPressed();
+		assertArrayEquals(new DataType[] {DataType.STRING}, op.getArgumentTypes());
 	}
 
 	@Test

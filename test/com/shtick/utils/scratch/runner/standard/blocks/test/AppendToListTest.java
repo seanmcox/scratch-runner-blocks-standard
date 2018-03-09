@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 import org.junit.jupiter.api.Test;
 
+import com.shtick.utils.scratch.runner.core.Opcode.DataType;
 import com.shtick.utils.scratch.runner.core.elements.List;
 import com.shtick.utils.scratch.runner.standard.blocks.AppendToList;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadList;
@@ -19,6 +20,12 @@ class AppendToListTest {
 	void testOpcode() {
 		AppendToList op = new AppendToList();
 		assertEquals("append:toList:",op.getOpcode());
+	}
+
+	@Test
+	void testArgumentTypes() {
+		AppendToList op = new AppendToList();
+		assertArrayEquals(new DataType[] {DataType.OBJECT,DataType.STRING}, op.getArgumentTypes());
 	}
 
 	@Test

@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import org.junit.jupiter.api.Test;
 
 import com.shtick.utils.scratch.runner.core.SpriteListener;
+import com.shtick.utils.scratch.runner.core.Opcode.DataType;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 import com.shtick.utils.scratch.runner.standard.blocks.Xpos;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRunner;
@@ -19,6 +20,12 @@ class XposTest {
 	void testOpcode() {
 		Xpos op = new Xpos();
 		assertEquals("xpos",op.getOpcode());
+	}
+
+	@Test
+	void testArgumentTypes() {
+		Xpos op = new Xpos();
+		assertArrayEquals(new DataType[] {}, op.getArgumentTypes());
 	}
 
 	@Test

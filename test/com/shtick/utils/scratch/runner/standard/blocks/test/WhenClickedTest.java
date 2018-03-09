@@ -12,6 +12,7 @@ import java.util.HashSet;
 import org.junit.jupiter.api.Test;
 
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
+import com.shtick.utils.scratch.runner.core.Opcode.DataType;
 import com.shtick.utils.scratch.runner.core.elements.RenderableChild;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
@@ -27,6 +28,12 @@ class WhenClickedTest {
 	void testOpcode() {
 		WhenClicked op = new WhenClicked();
 		assertEquals("whenClicked",op.getOpcode());
+	}
+
+	@Test
+	void testArgumentTypes() {
+		WhenClicked op = new WhenClicked();
+		assertArrayEquals(new DataType[] {}, op.getArgumentTypes());
 	}
 
 	@Test

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import com.shtick.utils.scratch.runner.core.Opcode.DataType;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 import com.shtick.utils.scratch.runner.standard.blocks.YposSet;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRunner;
@@ -16,6 +17,12 @@ class YposSetTest {
 	void testOpcode() {
 		YposSet op = new YposSet();
 		assertEquals("ypos:",op.getOpcode());
+	}
+
+	@Test
+	void testArgumentTypes() {
+		YposSet op = new YposSet();
+		assertArrayEquals(new DataType[] {DataType.NUMBER}, op.getArgumentTypes());
 	}
 
 	@Test

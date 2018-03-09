@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import com.shtick.utils.scratch.runner.core.Opcode.DataType;
 import com.shtick.utils.scratch.runner.standard.blocks._GreaterThan;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRunner;
 import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRuntime;
@@ -15,6 +16,12 @@ class _GreaterThanTest {
 	void testOpcode() {
 		_GreaterThan op = new _GreaterThan();
 		assertEquals(">",op.getOpcode());
+	}
+
+	@Test
+	void testArgumentTypes() {
+		_GreaterThan op = new _GreaterThan();
+		assertArrayEquals(new DataType[] {DataType.NUMBER,DataType.NUMBER}, op.getArgumentTypes());
 	}
 
 	@Test
