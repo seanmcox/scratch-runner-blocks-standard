@@ -45,13 +45,12 @@ public class Touching extends AbstractOpcodeValue {
 		if(sprite2==null)
 			throw new IllegalArgumentException("Sprite not found.");
 		Area spriteShape = sprite.getSpriteShape();
+		synchronized(sprite.getSpriteLock()){
+			spriteShape.transform(AffineTransform.getTranslateInstance(sprite.getScratchX(), -sprite.getScratchY()));
+		}
 		Area spriteShape2;
 		if(sprite2.isVisible()) {
 			spriteShape2 = sprite2.getSpriteShape();
-	
-			synchronized(sprite.getSpriteLock()){
-				spriteShape.transform(AffineTransform.getTranslateInstance(sprite.getScratchX(), -sprite.getScratchY()));
-			}
 			synchronized(sprite2.getSpriteLock()){
 				spriteShape2.transform(AffineTransform.getTranslateInstance(sprite2.getScratchX(), -sprite2.getScratchY()));
 			}
@@ -63,6 +62,9 @@ public class Touching extends AbstractOpcodeValue {
 			if(!clone.isVisible())
 				continue;
 			spriteShape2 = clone.getSpriteShape();
+			synchronized(clone.getSpriteLock()){
+				spriteShape2.transform(AffineTransform.getTranslateInstance(clone.getScratchX(), -clone.getScratchY()));
+			}
 			spriteShape2.intersect(spriteShape);
 			if(!spriteShape2.isEmpty())
 				return true;
