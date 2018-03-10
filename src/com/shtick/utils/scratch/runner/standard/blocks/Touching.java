@@ -44,22 +44,24 @@ public class Touching extends AbstractOpcodeValue {
 		Sprite sprite2 = runtime.getSpriteByName(s0);
 		if(sprite2==null)
 			throw new IllegalArgumentException("Sprite not found.");
-		if(!sprite2.isVisible())
-			return false;
-
 		Area spriteShape = sprite.getSpriteShape();
-		Area spriteShape2 = sprite2.getSpriteShape();
-
-		synchronized(sprite.getSpriteLock()){
-			spriteShape.transform(AffineTransform.getTranslateInstance(sprite.getScratchX(), -sprite.getScratchY()));
+		Area spriteShape2;
+		if(sprite2.isVisible()) {
+			spriteShape2 = sprite2.getSpriteShape();
+	
+			synchronized(sprite.getSpriteLock()){
+				spriteShape.transform(AffineTransform.getTranslateInstance(sprite.getScratchX(), -sprite.getScratchY()));
+			}
+			synchronized(sprite2.getSpriteLock()){
+				spriteShape2.transform(AffineTransform.getTranslateInstance(sprite2.getScratchX(), -sprite2.getScratchY()));
+			}
+			spriteShape2.intersect(spriteShape);
+			if(!spriteShape2.isEmpty())
+				return true;
 		}
-		synchronized(sprite2.getSpriteLock()){
-			spriteShape2.transform(AffineTransform.getTranslateInstance(sprite2.getScratchX(), -sprite2.getScratchY()));
-		}
-		spriteShape2.intersect(spriteShape);
-		if(!spriteShape2.isEmpty())
-			return true;
 		for(Sprite clone:sprite2.getClones()) {
+			if(!clone.isVisible())
+				continue;
 			spriteShape2 = clone.getSpriteShape();
 			spriteShape2.intersect(spriteShape);
 			if(!spriteShape2.isEmpty())
