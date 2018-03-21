@@ -4,7 +4,6 @@
 package com.shtick.utils.scratch.runner.standard.blocks.util;
 
 import java.awt.Component;
-import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseListener;
@@ -101,7 +100,7 @@ public class AllBadRuntime implements ScratchRuntime {
 	 * @see com.shtick.utils.scratch.runner.core.ScratchRuntime#startScript(com.shtick.utils.scratch.runner.core.elements.ScriptTuple)
 	 */
 	@Override
-	public ScriptTupleRunner startScript(ScriptTuple script, boolean isAtomic) {
+	public ScriptTupleRunner startScript(ScriptTuple script) {
 		throw new UnsupportedOperationException("Called startScript when not expected.");
 	}
 

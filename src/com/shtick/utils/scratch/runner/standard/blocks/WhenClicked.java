@@ -26,7 +26,6 @@ import com.shtick.utils.scratch.runner.core.elements.Sprite;
  */
 public class WhenClicked implements OpcodeHat {
 	private LinkedList<ScriptTuple> listeners = new LinkedList<>();
-	private HashMap<ScriptTuple,ScriptTupleRunner> scriptTupleRunners = new HashMap<>();
 
 	/* (non-Javadoc)
 	 * @see com.shtick.utils.scratch.runner.core.Opcode#getOpcode()
@@ -94,7 +93,7 @@ public class WhenClicked implements OpcodeHat {
 						return;
 					for(ScriptTuple script:clicked) {
 						if(script.getContext() == topTouched)
-							executeScript(script, runtime);
+							runtime.startScript(script);
 					}
 				}
 			}
@@ -121,38 +120,5 @@ public class WhenClicked implements OpcodeHat {
 		synchronized(listeners) {
 			listeners.remove(script);
 		}
-	}
-	
-	private void executeScript(ScriptTuple script, ScratchRuntime runtime) {
-		synchronized(scriptTupleRunners) {
-			if(scriptTupleRunners.containsKey(script)) {
-				synchronized(scriptTupleRunners.get(script)) {
-					scriptTupleRunners.get(script).flagStop();
-				}
-			}
-		}
-		synchronized(scriptTupleRunners) {
-			scriptTupleRunners.put(script, runtime.startScript(script, false));
-		}
-		Runnable runnable = new Runnable() {
-			ScriptTuple s = script;
-			
-			@Override
-			public void run() {
-				ScriptTupleRunner runner;
-				synchronized(scriptTupleRunners) {
-					runner = scriptTupleRunners.get(s);
-				}
-				try {
-					runner.join();
-				}
-				catch(InterruptedException t) {}
-				synchronized(scriptTupleRunners) {
-					if(scriptTupleRunners.get(s) == runner)
-						scriptTupleRunners.remove(s);
-				}
-			}
-		};
-		new Thread(runnable).start();
 	}
 }

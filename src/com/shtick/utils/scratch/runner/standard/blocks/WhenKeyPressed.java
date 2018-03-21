@@ -62,15 +62,8 @@ public class WhenKeyPressed implements OpcodeHat {
 					l = listeners.get(keyID);
 					if(l!=null) {
 						for(ScriptTuple script:l) {
-							if(!scriptTupleRunners.containsKey(script)) {
-								scriptTupleRunners.put(script, runtime.startScript(script, false));
-								new Thread(()->{
-									try {
-										scriptTupleRunners.get(script).join();
-									}
-									catch(InterruptedException t) {}
-									scriptTupleRunners.remove(script);
-								}).start();
+							if((!scriptTupleRunners.containsKey(script))||(scriptTupleRunners.get(script).isStopped())) {
+								scriptTupleRunners.put(script, runtime.startScript(script));
 							}
 						}
 					}
@@ -78,15 +71,8 @@ public class WhenKeyPressed implements OpcodeHat {
 				}
 				if(l!=null) {
 					for(ScriptTuple script:l) {
-						if(!scriptTupleRunners.containsKey(script)) {
-							scriptTupleRunners.put(script, runtime.startScript(script, false));
-							new Thread(()->{
-								try {
-									scriptTupleRunners.get(script).join();
-								}
-								catch(InterruptedException t) {}
-								scriptTupleRunners.remove(script);
-							}).start();
+						if((!scriptTupleRunners.containsKey(script))||(scriptTupleRunners.get(script).isStopped())) {
+							scriptTupleRunners.put(script, runtime.startScript(script));
 						}
 					}
 				}

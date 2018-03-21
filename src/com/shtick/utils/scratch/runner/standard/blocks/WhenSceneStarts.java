@@ -4,6 +4,7 @@
 package com.shtick.utils.scratch.runner.standard.blocks;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.TreeMap;
 
@@ -19,8 +20,7 @@ import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
  */
 public class WhenSceneStarts implements OpcodeHat {
 	private TreeMap<String,java.util.List<ScriptTuple>> listeners = new TreeMap<>();
-	private static TreeMap<String,Object> notifiers = new TreeMap<>();
-	private HashMap<ScriptTuple,ScriptTupleRunner> scriptTupleRunners = new HashMap<>();
+	private HashMap<String,java.util.List<ScriptTupleRunner>> scriptTupleRunners = new HashMap<>();
 
 	/* (non-Javadoc)
 	 * @see com.shtick.utils.scratch.runner.core.Opcode#getOpcode()
@@ -47,33 +47,33 @@ public class WhenSceneStarts implements OpcodeHat {
 			
 			@Override
 			public void sceneChanged(int oldSceneIndex, String oldSceneName, int newSceneIndex, String newSceneName) {
-				new Thread(()->{
-					LinkedList<ScriptTupleRunner> runners = new LinkedList<>();
-					synchronized(listeners) {
-						java.util.List<ScriptTuple> scripts = listeners.get(newSceneName);
-						if(scripts!=null) {
-							for(ScriptTuple script:scripts)
-								executeScript(script, runtime);
-						}
+				synchronized(listeners) {
+					java.util.List<ScriptTuple> scripts = listeners.get(newSceneName);
+					java.util.List<ScriptTupleRunner> runners = new LinkedList<>();
+					if(scripts!=null) {
+						for(ScriptTuple script:scripts)
+							runners.add(runtime.startScript(script));
 					}
-					for(ScriptTupleRunner runner:runners) {
-						try {
-							runner.join();
-						}
-						catch(InterruptedException t) {}
-					}
-					synchronized(notifiers) {
-						Object notifier = notifiers.get(newSceneName);
-						if(notifier!=null) {
-							synchronized(notifier) {
-								notifier.notifyAll();
-							}
-							notifiers.remove(newSceneName);
-						}
-					}
-				}).start();
+					scriptTupleRunners.put(newSceneName, runners);
+				}
 			}
 		});
+	}
+	
+	public boolean areSceneChangeScriptsRunning(String sceneName) {
+		java.util.List<ScriptTupleRunner> runners = scriptTupleRunners.get(sceneName);
+		if(runners == null)
+			return false;
+		Iterator<ScriptTupleRunner> iter = runners.iterator();
+		ScriptTupleRunner runner;
+		while(iter.hasNext()) {
+			runner = iter.next();
+			if(runner.isStopped())
+				iter.remove();
+			else
+				return true;
+		}
+		return false;
 	}
 
 	/* (non-Javadoc)
@@ -101,53 +101,5 @@ public class WhenSceneStarts implements OpcodeHat {
 			if(scripts.size()==0)
 				listeners.remove(params[0]);
 		}
-	}
-
-	/**
-	 * 
-	 * @param sceneName
-	 * @return A lock object that will be notified when the scene has changed to the scene with the given sceneName, and all events initialized in response have completed.
-	 *         This lock object is only valid until the next time it is notified.
-	 */
-	public static Object getSceneEventNotifier(String sceneName) {
-		synchronized(notifiers) {
-			if(notifiers.get(sceneName)==null) {
-				notifiers.put(sceneName, new Object());
-			}
-			return notifiers.get(sceneName);
-		}
-	}
-	
-	private void executeScript(ScriptTuple script, ScratchRuntime runtime) {
-		synchronized(scriptTupleRunners) {
-			if(scriptTupleRunners.containsKey(script)) {
-				synchronized(scriptTupleRunners.get(script)) {
-					scriptTupleRunners.get(script).flagStop();
-				}
-			}
-		}
-		synchronized(scriptTupleRunners) {
-			scriptTupleRunners.put(script, runtime.startScript(script, false));
-		}
-		Runnable runnable = new Runnable() {
-			ScriptTuple s = script;
-			
-			@Override
-			public void run() {
-				ScriptTupleRunner runner;
-				synchronized(scriptTupleRunners) {
-					runner = scriptTupleRunners.get(s);
-				}
-				try {
-					runner.join();
-				}
-				catch(InterruptedException t) {}
-				synchronized(scriptTupleRunners) {
-					if(scriptTupleRunners.get(s) == runner)
-						scriptTupleRunners.remove(s);
-				}
-			}
-		};
-		new Thread(runnable).start();
 	}
 }

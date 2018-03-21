@@ -24,6 +24,10 @@ public class Activator implements BundleActivator {
 	 */
 	public static final WhenIReceive WHEN_I_RECEIVE = new WhenIReceive();
 	/**
+	 * WhenSceneStarts opcode to share.
+	 */
+	public static final WhenSceneStarts WHEN_SCENE_STARTS = new WhenSceneStarts();
+	/**
 	 * 
 	 */
 	public static final ProcDef PROC_DEF = new ProcDef();
@@ -192,7 +196,7 @@ public class Activator implements BundleActivator {
 			runtimeRegistrations.add(context.registerService(Opcode.class.getName(), new WhenGreenFlag(),new Hashtable<String, String>()));
 			runtimeRegistrations.add(context.registerService(Opcode.class.getName(), WHEN_I_RECEIVE,new Hashtable<String, String>()));
 			runtimeRegistrations.add(context.registerService(Opcode.class.getName(), new WhenKeyPressed(),new Hashtable<String, String>()));
-			runtimeRegistrations.add(context.registerService(Opcode.class.getName(), new WhenSceneStarts(),new Hashtable<String, String>()));
+			runtimeRegistrations.add(context.registerService(Opcode.class.getName(), WHEN_SCENE_STARTS,new Hashtable<String, String>()));
 			// TODO whenSensorGreaterThan
 			runtimeRegistrations.add(context.registerService(Opcode.class.getName(), new Xpos(),new Hashtable<String, String>()));
 			runtimeRegistrations.add(context.registerService(Opcode.class.getName(), new XposSet(),new Hashtable<String, String>()));

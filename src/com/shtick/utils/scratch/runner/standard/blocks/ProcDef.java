@@ -7,8 +7,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import com.shtick.utils.scratch.runner.core.OpcodeHat;
+import com.shtick.utils.scratch.runner.core.OpcodeSubaction;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
+import com.shtick.utils.scratch.runner.core.SoundMonitor;
 import com.shtick.utils.scratch.runner.core.ValueListener;
 import com.shtick.utils.scratch.runner.core.elements.List;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
@@ -33,7 +35,6 @@ import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
  */
 public class ProcDef implements OpcodeHat {
 	private HashMap<String,HashMap<String,ProcedureDefinition>> listenersByContextObject = new HashMap<>();
-	private ScratchRuntime runtime;
 
 	/* (non-Javadoc)
 	 * @see com.shtick.utils.scratch.runner.core.Opcode#getOpcode()
@@ -56,7 +57,6 @@ public class ProcDef implements OpcodeHat {
 	 */
 	@Override
 	public void applicationStarted(ScratchRuntime runtime) {
-		this.runtime = runtime;
 	}
 
 	/* (non-Javadoc)
@@ -107,9 +107,10 @@ public class ProcDef implements OpcodeHat {
 	 * @param procName 
 	 * @param params 
 	 * @param runner 
+	 * @return An OpcodeSubaction of type SUBSCRIPT giving the subscript to be run.
 	 * 
 	 */
-	public void call(ScriptContext context, String procName, Object[] params, ScriptTupleRunner runner) {
+	public OpcodeSubaction call(ScriptContext context, String procName, Object[] params, ScriptTupleRunner runner) {
 		if(procName.equals("Collateral Checks_pr %n %s %b")||procName.equals("Add to grow %n %n")) {
 			if(context instanceof ProcDef.ProcedureContext)
 				System.out.println(((ProcDef.ProcedureContext)context).getProcName());
@@ -135,12 +136,28 @@ public class ProcDef implements OpcodeHat {
 		for(int i=0;i<parameters.length;i++)
 			parameters[i] = params[i];
 		
-		ScriptTupleRunner childRunner = runtime.startScript(procDef.script.clone(new ProcedureContext(context, procDef.getProcName(), procDef.getParamNames(), parameters)), procDef.isAtomic());
-		try {
-			childRunner.join();
-		}
-		catch(InterruptedException t) {
-		}
+		return new OpcodeSubaction() {
+			
+			@Override
+			public boolean shouldYield() {
+				return false;
+			}
+			
+			@Override
+			public Type getType() {
+				return Type.SUBSCRIPT;
+			}
+			
+			@Override
+			public ScriptTuple getSubscript() {
+				return procDef.script.clone(new ProcedureContext(context, procDef.getProcName(), procDef.getParamNames(), parameters));
+			}
+
+			@Override
+			public boolean isSubscriptAtomic() {
+				return procDef.isAtomic();
+			}
+		};
 	}
 
 	private class ProcedureDefinition{
@@ -284,8 +301,8 @@ public class ProcDef implements OpcodeHat {
 		 * @see com.shtick.utils.scratch.runner.core.elements.ScriptContext#playSoundByName(java.lang.String, boolean)
 		 */
 		@Override
-		public void playSoundByName(String soundName, boolean block) {
-			parentContext.playSoundByName(soundName, block);
+		public SoundMonitor playSoundByName(String soundName) {
+			return parentContext.playSoundByName(soundName);
 		}
 
 		/* (non-Javadoc)
@@ -308,16 +325,8 @@ public class ProcDef implements OpcodeHat {
 		 * @see com.shtick.utils.scratch.runner.core.elements.ScriptContext#stopThreads()
 		 */
 		@Override
-		public void stopThreads() {
-			parentContext.stopThreads();
-		}
-
-		/* (non-Javadoc)
-		 * @see com.shtick.utils.scratch.runner.core.elements.ScriptContext#getThreadGroup()
-		 */
-		@Override
-		public ThreadGroup getThreadGroup() {
-			return parentContext.getThreadGroup();
+		public void stopScripts() {
+			parentContext.stopScripts();
 		}
 
 		/* (non-Javadoc)

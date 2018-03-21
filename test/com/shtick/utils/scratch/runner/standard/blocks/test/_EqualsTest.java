@@ -151,7 +151,7 @@ class _EqualsTest {
 
 		{ // false == string
 			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {false,"0"});
-			assertFalse((Boolean)retval);
+			assertTrue((Boolean)retval);
 		}
 
 		{ // false == string
@@ -161,7 +161,7 @@ class _EqualsTest {
 
 		{ // string == false
 			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"0",false});
-			assertFalse((Boolean)retval);
+			assertTrue((Boolean)retval);
 		}
 
 		{ // string == false

@@ -41,7 +41,7 @@ public class WhenGreenFlag implements OpcodeHat {
 		StandardBlocksExtensions.resetTimer();
 		synchronized(listeners) {
 			for(ScriptTuple tuple:listeners)
-				runtime.startScript(tuple, false);
+				runtime.startScript(tuple);
 		}
 	}
 

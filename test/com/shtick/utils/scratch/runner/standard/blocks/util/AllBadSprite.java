@@ -11,6 +11,7 @@ import java.awt.geom.Area;
 import java.util.Map;
 import java.util.Set;
 
+import com.shtick.utils.scratch.runner.core.SoundMonitor;
 import com.shtick.utils.scratch.runner.core.SpriteListener;
 import com.shtick.utils.scratch.runner.core.ValueListener;
 import com.shtick.utils.scratch.runner.core.elements.Costume;
@@ -24,13 +25,14 @@ import com.shtick.utils.scratch.runner.core.elements.Sprite;
  */
 public class AllBadSprite implements Sprite {
 	@Override
-	public void stopThreads() {
-		fail("stopThreads called unnecessarily");
+	public void stopScripts() {
+		fail("stopScripts called unnecessarily");
 	}
 	
 	@Override
-	public void playSoundByName(String soundName, boolean block) {
+	public SoundMonitor playSoundByName(String soundName) {
 		fail("playSoundByName called unnecessarily");
+		return null;
 	}
 	
 	@Override
@@ -42,12 +44,6 @@ public class AllBadSprite implements Sprite {
 	public double getVolume() {
 		fail("getVolume called unnecessarily");
 		return 100;
-	}
-
-	@Override
-	public ThreadGroup getThreadGroup() {
-		fail("getThreadGroup called unnecessarily");
-		return null;
 	}
 	
 	@Override

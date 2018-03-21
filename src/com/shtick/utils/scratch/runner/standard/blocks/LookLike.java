@@ -4,6 +4,7 @@
 package com.shtick.utils.scratch.runner.standard.blocks;
 
 import com.shtick.utils.scratch.runner.core.OpcodeAction;
+import com.shtick.utils.scratch.runner.core.OpcodeSubaction;
 import com.shtick.utils.scratch.runner.core.OpcodeUtils;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
@@ -36,7 +37,7 @@ public class LookLike implements OpcodeAction {
 	 * @see com.shtick.utils.scratch.runner.core.OpcodeAction#execute(com.shtick.utils.scratch.runner.core.ScratchRuntime, com.shtick.utils.scratch.runner.core.ScriptTupleRunner, com.shtick.utils.scratch.runner.core.elements.ScriptContext, java.lang.Object[])
 	 */
 	@Override
-	public void execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context,
+	public OpcodeSubaction execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context,
 			Object[] arguments) {
 		if(!(context.getContextObject() instanceof Sprite))
 			throw new IllegalArgumentException("bounceOffEdge opcode only valid in Sprite context.");
@@ -47,6 +48,7 @@ public class LookLike implements OpcodeAction {
 		if(a0 instanceof Number)
 			sprite.setCurrentCostumeIndex(((Number)a0).intValue()-1);
 		sprite.setCostumeByName(OpcodeUtils.getStringValue(a0));
+		return null;
 	}
 
 }

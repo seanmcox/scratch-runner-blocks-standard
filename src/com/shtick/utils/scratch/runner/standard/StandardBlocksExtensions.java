@@ -17,7 +17,9 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.LinkedList;
+import java.util.Set;
 
+import com.shtick.utils.scratch.runner.core.OpcodeSubaction;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.ValueListener;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
@@ -46,11 +48,11 @@ public class StandardBlocksExtensions {
 	/**
 	 * 
 	 * @param message
-	 * @param block If true, then the function blocks until all ScriptTuples listening for, and started in response to, this message complete running.
+	 * @return A Set of ScriptTupleRunners. Modification of the set has no side-effects.
 	 */
-	public static void broadcast(String message, boolean block) {
+	public static Set<ScriptTupleRunner> broadcast(String message) {
 		System.out.println("broadcasting: "+message);
-		Activator.WHEN_I_RECEIVE.broadcast(message, block);
+		return Activator.WHEN_I_RECEIVE.broadcast(message);
 		
 	}
 	
@@ -59,10 +61,11 @@ public class StandardBlocksExtensions {
 	 * @param procName 
 	 * @param params 
 	 * @param runner 
+	 * @return An OpcodeSubaction of type SUBSCRIPT giving the subscript to be run.
 	 * 
 	 */
-	public static void call(ScriptContext context, String procName, Object[] params, ScriptTupleRunner runner) {
-		Activator.PROC_DEF.call(context, procName, params, runner);
+	public static OpcodeSubaction call(ScriptContext context, String procName, Object[] params, ScriptTupleRunner runner) {
+		return Activator.PROC_DEF.call(context, procName, params, runner);
 	}
 
 	/**

@@ -6,6 +6,7 @@ package com.shtick.utils.scratch.runner.standard.blocks;
 import java.util.Arrays;
 
 import com.shtick.utils.scratch.runner.core.OpcodeAction;
+import com.shtick.utils.scratch.runner.core.OpcodeSubaction;
 import com.shtick.utils.scratch.runner.core.OpcodeUtils;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
@@ -42,7 +43,7 @@ public class ChangeVarBy implements OpcodeAction {
 	 * @see com.shtick.utils.scratch.runner.core.OpcodeAction#execute(com.shtick.utils.scratch.runner.core.ScratchRuntime, com.shtick.utils.scratch.runner.core.ScriptTupleRunner, com.shtick.utils.scratch.runner.core.elements.ScriptContext, java.lang.Object[])
 	 */
 	@Override
-	public void execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context,
+	public OpcodeSubaction execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context,
 			Object[] arguments) {
 		if(arguments.length!=2)
 			throw new IllegalArgumentException("2 argument expected for "+getOpcode()+" opcode");
@@ -65,6 +66,7 @@ public class ChangeVarBy implements OpcodeAction {
 		if((oldValue instanceof Integer)&&(n1 instanceof Integer))
 			context.setContextVariableValueByName(s0, oldValue.intValue()+n1.intValue());
 		context.setContextVariableValueByName(s0, oldValue.doubleValue()+n1.doubleValue());
+		return null;
 	}
 
 }

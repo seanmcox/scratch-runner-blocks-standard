@@ -3,7 +3,9 @@
  */
 package com.shtick.utils.scratch.runner.standard.blocks;
 
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 import java.util.TreeMap;
 
 import com.shtick.utils.scratch.runner.core.Opcode;
@@ -74,32 +76,19 @@ public class WhenIReceive implements OpcodeHat {
 	/**
 	 * 
 	 * @param message
-	 * @param block 
+	 * @return A Set of ScriptTupleRunners. Modification of the set has no side-effects.
 	 */
-	public void broadcast(String message, boolean block) {
+	public Set<ScriptTupleRunner> broadcast(String message) {
 		java.util.List<ScriptTuple> messageListeners;
 		synchronized(listeners) {
 			messageListeners = listeners.get(message);
 			if(messageListeners == null)
-				return;
+				return new HashSet<>(1);
 			messageListeners = new LinkedList<>(messageListeners);
 		}
-		if(block) {
-			LinkedList<ScriptTupleRunner> runners = new LinkedList<>();
-			for(ScriptTuple tuple:messageListeners)
-				runners.add(runtime.startScript(tuple, false));
-			for(ScriptTupleRunner runner:runners) {
-//				Opcode currentOpcode = runner.getCurrentOpcode();
-//				System.out.println("Broadcast of "+message+" waiting on "+runner.getContext().getObjName()+"\n\t"+((currentOpcode==null)?null:currentOpcode.getOpcode()));
-				try {
-					runner.join();
-				}
-				catch(InterruptedException t) {}
-			}
-		}
-		else {
-			for(ScriptTuple tuple:messageListeners)
-				runtime.startScript(tuple, false);
-		}
+		HashSet<ScriptTupleRunner> runners = new HashSet<>(messageListeners.size());
+		for(ScriptTuple tuple:messageListeners)
+			runners.add(runtime.startScript(tuple));
+		return runners;
 	}
 }

@@ -6,6 +6,7 @@ package com.shtick.utils.scratch.runner.standard.blocks;
 import java.awt.Color;
 
 import com.shtick.utils.scratch.runner.core.OpcodeAction;
+import com.shtick.utils.scratch.runner.core.OpcodeSubaction;
 import com.shtick.utils.scratch.runner.core.OpcodeUtils;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
@@ -38,7 +39,7 @@ public class SetPenHueTo implements OpcodeAction {
 	 * @see com.shtick.utils.scratch.runner.core.OpcodeAction#execute(com.shtick.utils.scratch.runner.core.ScratchRuntime, com.shtick.utils.scratch.runner.core.ScriptTupleRunner, com.shtick.utils.scratch.runner.core.elements.ScriptContext, java.lang.Object[])
 	 */
 	@Override
-	public void execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context,
+	public OpcodeSubaction execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context,
 			Object[] arguments) {
 		if(!(context.getContextObject() instanceof Sprite))
 			throw new IllegalArgumentException(getOpcode()+" opcode only valid in Sprite context.");
@@ -59,6 +60,7 @@ public class SetPenHueTo implements OpcodeAction {
 				sprite.setPenColor(new Color(color,false));
 			}
 		}
+		return null;
 	}
 
 }

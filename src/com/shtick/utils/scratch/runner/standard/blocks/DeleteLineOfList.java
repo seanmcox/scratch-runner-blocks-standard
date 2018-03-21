@@ -4,6 +4,7 @@
 package com.shtick.utils.scratch.runner.standard.blocks;
 
 import com.shtick.utils.scratch.runner.core.OpcodeAction;
+import com.shtick.utils.scratch.runner.core.OpcodeSubaction;
 import com.shtick.utils.scratch.runner.core.OpcodeUtils;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
@@ -36,7 +37,7 @@ public class DeleteLineOfList implements OpcodeAction {
 	 * @see com.shtick.utils.scratch.runner.core.OpcodeAction#execute(com.shtick.utils.scratch.runner.core.ScratchRuntime, com.shtick.utils.scratch.runner.core.ScriptTupleRunner, com.shtick.utils.scratch.runner.core.elements.ScriptContext, java.lang.Object[])
 	 */
 	@Override
-	public void execute(ScratchRuntime runtime, ScriptTupleRunner runner, ScriptContext context, Object[] arguments) {
+	public OpcodeSubaction execute(ScratchRuntime runtime, ScriptTupleRunner runner, ScriptContext context, Object[] arguments) {
 		Object a0 = arguments[0];
 		int n0;
 		String s1 = (String)arguments[1];
@@ -48,7 +49,7 @@ public class DeleteLineOfList implements OpcodeAction {
 			else if("all".equals(a0)) {
 				while(list.getItemCount()>0)
 					list.deleteItem(1);
-				return;
+				return null;
 			}
 			else {
 				n0 = OpcodeUtils.getNumericValue(a0).intValue();
@@ -63,6 +64,7 @@ public class DeleteLineOfList implements OpcodeAction {
 		catch(IndexOutOfBoundsException t) {
 			System.err.println("WARNING: \""+getOpcode()+"\": Invalid index of list, "+s1+". "+t.getMessage());
 		}
+		return null;
 	}
 
 }

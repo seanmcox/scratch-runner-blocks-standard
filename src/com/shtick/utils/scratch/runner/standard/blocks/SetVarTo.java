@@ -6,6 +6,7 @@ package com.shtick.utils.scratch.runner.standard.blocks;
 import java.util.Arrays;
 
 import com.shtick.utils.scratch.runner.core.OpcodeAction;
+import com.shtick.utils.scratch.runner.core.OpcodeSubaction;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.elements.BlockTuple;
@@ -41,7 +42,7 @@ public class SetVarTo implements OpcodeAction {
 	 * @see com.shtick.utils.scratch.runner.core.OpcodeAction#execute(com.shtick.utils.scratch.runner.core.ScratchRuntime, com.shtick.utils.scratch.runner.core.ScriptTupleRunner, com.shtick.utils.scratch.runner.core.elements.ScriptContext, java.lang.Object[])
 	 */
 	@Override
-	public void execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context,
+	public OpcodeSubaction execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context,
 			Object[] arguments) {
 		String s0 = (String)arguments[0];
 		Object val1 = arguments[1];
@@ -55,6 +56,7 @@ public class SetVarTo implements OpcodeAction {
 			System.out.println("Setting "+s0+" to "+val1);
 		}
 		context.setContextVariableValueByName(s0, val1);
+		return null;
 	}
 
 }

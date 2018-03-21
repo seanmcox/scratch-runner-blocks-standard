@@ -30,6 +30,11 @@ public class AllBadRunner implements ScriptTupleRunner {
 		throw new UnsupportedOperationException("Called isStopFlagged when not expected.");
 	}
 
+	@Override
+	public boolean isStopped() {
+		throw new UnsupportedOperationException("Called isStopped when not expected.");
+	}
+
 	/* (non-Javadoc)
 	 * @see com.shtick.utils.scratch.runner.core.ScriptTupleRunner#getOpcode(com.shtick.utils.scratch.runner.core.elements.BlockTuple)
 	 */
@@ -50,29 +55,4 @@ public class AllBadRunner implements ScriptTupleRunner {
 	public ScriptContext getContext() {
 		throw new UnsupportedOperationException("Called getContext when not expected.");
 	}
-
-	/* (non-Javadoc)
-	 * @see com.shtick.utils.scratch.runner.core.ScriptTupleRunner#isAtomic()
-	 */
-	@Override
-	public boolean isAtomic() {
-		throw new UnsupportedOperationException("Called isAtomic when not expected.");
-	}
-
-	/* (non-Javadoc)
-	 * @see com.shtick.utils.scratch.runner.core.ScriptTupleRunner#join(long, int)
-	 */
-	@Override
-	public void join(long millis, int nanos) throws InterruptedException {
-		throw new UnsupportedOperationException("Called join when not expected.");
-	}
-
-	/* (non-Javadoc)
-	 * @see com.shtick.utils.scratch.runner.core.ScriptTupleRunner#join()
-	 */
-	@Override
-	public void join() throws InterruptedException {
-		throw new UnsupportedOperationException("Called join when not expected.");
-	}
-
 }

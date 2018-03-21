@@ -4,6 +4,7 @@
 package com.shtick.utils.scratch.runner.standard.blocks;
 
 import com.shtick.utils.scratch.runner.core.OpcodeAction;
+import com.shtick.utils.scratch.runner.core.OpcodeSubaction;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.elements.RenderableChild;
@@ -37,7 +38,7 @@ public class ShowVariable implements OpcodeAction {
 	 * @see com.shtick.utils.scratch.runner.core.OpcodeAction#execute(com.shtick.utils.scratch.runner.core.ScratchRuntime, com.shtick.utils.scratch.runner.core.ScriptTupleRunner, com.shtick.utils.scratch.runner.core.elements.ScriptContext, java.lang.Object[])
 	 */
 	@Override
-	public void execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context,
+	public OpcodeSubaction execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context,
 			Object[] arguments) {
 		String s0 = (String)arguments[0];
 		RenderableChild[] renderableChildren = runtime.getAllRenderableChildren();
@@ -46,7 +47,7 @@ public class ShowVariable implements OpcodeAction {
 				StageMonitor monitor = (StageMonitor)child;
 				if(((StageMonitor)child).getCmd().equals(GetVar.COMMAND)&&(monitor.getParam().equals(s0))) {
 					monitor.setVisible(true);
-					return;
+					return null;
 				}
 			}
 		}

@@ -4,6 +4,7 @@
 package com.shtick.utils.scratch.runner.standard.blocks;
 
 import com.shtick.utils.scratch.runner.core.OpcodeAction;
+import com.shtick.utils.scratch.runner.core.OpcodeSubaction;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.elements.List;
@@ -35,16 +36,17 @@ public class AppendToList implements OpcodeAction {
 	 * @see com.shtick.utils.scratch.runner.core.OpcodeAction#execute(com.shtick.utils.scratch.runner.core.ScratchRuntime, com.shtick.utils.scratch.runner.core.ScriptTupleRunner, com.shtick.utils.scratch.runner.core.elements.ScriptContext, java.lang.Object[])
 	 */
 	@Override
-	public void execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context,
+	public OpcodeSubaction execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context,
 			Object[] arguments) {
 		Object value = arguments[0];
 		String listName = (String)arguments[1];
 		List list = context.getContextListByName(listName);
 		if(list==null) {
 			System.err.println("WARNING: \""+getOpcode()+"\": List not found: "+listName);
-			return;
+			return null;
 		}
 		list.addItem(value);
+		return null;
 	}
 
 }

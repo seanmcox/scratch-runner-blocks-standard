@@ -3,6 +3,7 @@
  */
 package com.shtick.utils.scratch.runner.standard.blocks.util;
 
+import com.shtick.utils.scratch.runner.core.SoundMonitor;
 import com.shtick.utils.scratch.runner.core.StageListener;
 import com.shtick.utils.scratch.runner.core.ValueListener;
 import com.shtick.utils.scratch.runner.core.elements.Costume;
@@ -92,7 +93,7 @@ public class AllBadStage implements Stage {
 	 * @see com.shtick.utils.scratch.runner.core.elements.ScriptContext#playSoundByName(java.lang.String, boolean)
 	 */
 	@Override
-	public void playSoundByName(String soundName, boolean block) {
+	public SoundMonitor playSoundByName(String soundName) {
 		throw new UnsupportedOperationException("Called playSoundByName when not expected.");
 	}
 
@@ -132,16 +133,8 @@ public class AllBadStage implements Stage {
 	 * @see com.shtick.utils.scratch.runner.core.elements.ScriptContext#stopThreads()
 	 */
 	@Override
-	public void stopThreads() {
+	public void stopScripts() {
 		throw new UnsupportedOperationException("Called stopThreads when not expected.");
-	}
-
-	/* (non-Javadoc)
-	 * @see com.shtick.utils.scratch.runner.core.elements.ScriptContext#getThreadGroup()
-	 */
-	@Override
-	public ThreadGroup getThreadGroup() {
-		throw new UnsupportedOperationException("Called getThreadGroup when not expected.");
 	}
 
 	/* (non-Javadoc)
