@@ -82,7 +82,7 @@ public class Activator implements BundleActivator {
 			runtimeRegistrations.add(context.registerService(Opcode.class.getName(), new DeleteClone(),new Hashtable<String, String>()));
 			runtimeRegistrations.add(context.registerService(Opcode.class.getName(), new DeleteLineOfList(),new Hashtable<String, String>()));
 			runtimeRegistrations.add(context.registerService(Opcode.class.getName(), new DistanceTo(),new Hashtable<String, String>()));
-			// TODO doAsk
+			runtimeRegistrations.add(context.registerService(Opcode.class.getName(), new DoAsk(),new Hashtable<String, String>()));
 			runtimeRegistrations.add(context.registerService(Opcode.class.getName(), new DoBroadcastAndWait(),new Hashtable<String, String>()));
 			runtimeRegistrations.add(context.registerService(Opcode.class.getName(), new DoForever(),new Hashtable<String, String>()));
 			runtimeRegistrations.add(context.registerService(Opcode.class.getName(), new DoForeverIf(),new Hashtable<String, String>()));
