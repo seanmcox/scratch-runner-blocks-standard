@@ -51,7 +51,6 @@ public class StandardBlocksExtensions {
 	 * @return A Set of ScriptTupleRunners. Modification of the set has no side-effects.
 	 */
 	public static Set<ScriptTupleRunner> broadcast(String message) {
-		System.out.println("broadcasting: "+message);
 		return Activator.WHEN_I_RECEIVE.broadcast(message);
 		
 	}

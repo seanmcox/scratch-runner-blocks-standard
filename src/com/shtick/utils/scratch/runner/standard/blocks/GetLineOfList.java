@@ -63,16 +63,6 @@ public class GetLineOfList implements OpcodeValue {
 		}
 		catch(IndexOutOfBoundsException t) {
 			System.err.println("WARNING: \""+getOpcode()+"\": Invalid index of list, "+s1+". "+t.getMessage());
-			if(!("_Level".equals(s1)||"tree".equals(s1))) {
-				if(context instanceof ProcDef.ProcedureContext)
-					System.out.println(((ProcDef.ProcedureContext)context).getProcName());
-				if(arguments[0] instanceof BlockTuple) {
-					System.out.println(((BlockTuple)arguments[0]).getOpcode());
-					System.out.println(Arrays.toString(((BlockTuple)arguments[0]).getArguments().toArray()));
-				}
-				System.out.println(s1);
-//				System.exit(1);
-			}
 			return "";
 		}
 	}

@@ -54,15 +54,6 @@ public class ChangeVarBy implements OpcodeAction {
 		String s0 = (String)arguments[0];
 		Number n1 = (Number)arguments[1];
 		Number oldValue = OpcodeUtils.getNumericValue(context.getContextVariableValueByName(s0));
-		if(s0.equals("growIdx")) {
-			if(context instanceof ProcDef.ProcedureContext)
-				System.out.println(((ProcDef.ProcedureContext)context).getProcName());
-			if(arguments[1] instanceof BlockTuple) {
-				System.out.println(((BlockTuple)arguments[1]).getOpcode());
-				System.out.println(Arrays.toString(((BlockTuple)arguments[1]).getArguments().toArray()));
-			}
-			System.out.println("Changing "+s0+" by "+n1+" (old value: "+oldValue+")");
-		}
 		if((oldValue instanceof Integer)&&(n1 instanceof Integer))
 			context.setContextVariableValueByName(s0, oldValue.intValue()+n1.intValue());
 		context.setContextVariableValueByName(s0, oldValue.doubleValue()+n1.doubleValue());

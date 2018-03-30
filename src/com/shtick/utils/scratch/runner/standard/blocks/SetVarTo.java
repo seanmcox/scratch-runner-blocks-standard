@@ -46,15 +46,6 @@ public class SetVarTo implements OpcodeAction {
 			Object[] arguments) {
 		String s0 = (String)arguments[0];
 		Object val1 = arguments[1];
-		if(s0.equals("growIdx")) {
-			if(context instanceof ProcDef.ProcedureContext)
-				System.out.println(((ProcDef.ProcedureContext)context).getProcName());
-			if(arguments[1] instanceof BlockTuple) {
-				System.out.println(((BlockTuple)arguments[1]).getOpcode());
-				System.out.println(Arrays.toString(((BlockTuple)arguments[1]).getArguments().toArray()));
-			}
-			System.out.println("Setting "+s0+" to "+val1);
-		}
 		context.setContextVariableValueByName(s0, val1);
 		return null;
 	}

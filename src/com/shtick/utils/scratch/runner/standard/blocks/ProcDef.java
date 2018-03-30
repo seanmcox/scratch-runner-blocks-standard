@@ -111,12 +111,6 @@ public class ProcDef implements OpcodeHat {
 	 * 
 	 */
 	public OpcodeSubaction call(ScriptContext context, String procName, Object[] params, ScriptTupleRunner runner) {
-		if(procName.equals("Collateral Checks_pr %n %s %b")||procName.equals("Add to grow %n %n")) {
-			if(context instanceof ProcDef.ProcedureContext)
-				System.out.println(((ProcDef.ProcedureContext)context).getProcName());
-			System.out.println("Called: "+procName+" - "+Arrays.toString(params));
-			System.out.flush();
-		}
 		ScriptContext contextObject = context.getContextObject();
 		ProcedureDefinition procDef;
 		synchronized(listenersByContextObject) {
