@@ -8,6 +8,7 @@ import com.shtick.utils.scratch.runner.core.elements.BlockTuple;
 import com.shtick.utils.scratch.runner.core.elements.control.BasicJumpBlockTuple;
 import com.shtick.utils.scratch.runner.core.elements.control.FalseJumpBlockTuple;
 import com.shtick.utils.scratch.runner.core.elements.control.TestBlockTuple;
+import com.shtick.utils.scratch.runner.core.elements.control.TrueJumpBlockTuple;
 
 /**
  * @author sean.cox
@@ -39,7 +40,7 @@ public class DoUntil implements OpcodeControl {
 		java.util.List<BlockTuple> subtuples = (java.util.List<BlockTuple>)arguments.get(1);
 		BlockTuple[] retval = new BlockTuple[subtuples.size()+3];
 		retval[0] = new TestBlockTuple(arguments.get(0));
-		retval[1] = new FalseJumpBlockTuple(retval.length);
+		retval[1] = new TrueJumpBlockTuple(retval.length);
 		int i=2;
 		for(BlockTuple subtuple:subtuples) {
 			retval[i] = subtuple;
