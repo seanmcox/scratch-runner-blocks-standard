@@ -5,7 +5,6 @@ package com.shtick.utils.scratch.runner.standard.blocks.util;
 
 import java.util.Iterator;
 
-import com.shtick.utils.scratch.runner.core.ListListener;
 import com.shtick.utils.scratch.runner.core.elements.List;
 
 /**
@@ -31,11 +30,6 @@ public class AllBadList implements List {
 	@Override
 	public void setItem(Object item, int index) {
 		throw new UnsupportedOperationException("Called setItem when not expected.");
-	}
-	
-	@Override
-	public void removeListListener(ListListener listener) {
-		throw new UnsupportedOperationException("Called removeListListener when not expected.");
 	}
 	
 	@Override
@@ -120,13 +114,5 @@ public class AllBadList implements List {
 	@Override
 	public Double getHeight() {
 		throw new UnsupportedOperationException("Called getHeight when not expected.");
-	}
-
-	/* (non-Javadoc)
-	 * @see com.shtick.utils.scratch.runner.core.elements.List#addListListener(com.shtick.utils.scratch.runner.core.ListListener)
-	 */
-	@Override
-	public void addListListener(ListListener listener) {
-		throw new UnsupportedOperationException("Called addListListener when not expected.");
 	}
 }
