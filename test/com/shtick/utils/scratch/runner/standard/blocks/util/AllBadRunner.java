@@ -55,4 +55,9 @@ public class AllBadRunner implements ScriptTupleRunner {
 	public ScriptContext getContext() {
 		throw new UnsupportedOperationException("Called getContext when not expected.");
 	}
+
+	@Override
+	public String getStackTrace() {
+		throw new UnsupportedOperationException("Called getStackTrace when not expected.");
+	}
 }
