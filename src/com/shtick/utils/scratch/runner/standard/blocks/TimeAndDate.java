@@ -40,19 +40,19 @@ public class TimeAndDate implements OpcodeValue {
 		LocalDateTime now = LocalDateTime.now();
 		switch((String)arguments[0]) {
 		case "year":
-			return now.getYear();
+			return (long)now.getYear();
 		case "month":
-			return now.getMonth().getValue();
+			return (long)now.getMonth().getValue();
 		case "date":
-			return now.getDayOfMonth();
+			return (long)now.getDayOfMonth();
 		case "day of week":
-			return now.getDayOfWeek().getValue();
+			return (long)now.getDayOfWeek().getValue();
 		case "hour":
-			return now.getHour();
+			return (long)now.getHour();
 		case "minute":
-			return now.getMinute();
+			return (long)now.getMinute();
 		case "second":
-			return now.getSecond();
+			return (long)now.getSecond();
 		default:
 			System.err.println("WARNING: Unrecognized timeAndDate parameter: "+arguments[0]);
 			return "";

@@ -31,12 +31,12 @@ class RoundedTest {
 
 		{
 			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1.5});
-			assertEquals(2,retval);
+			assertEquals(2L,retval);
 		}
 
 		try {
 			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"1.5"});
-			assertEquals(2,retval);
+			assertEquals(2L,retval);
 			fail("Exception expected.");
 		}
 		catch (Exception t) {
@@ -74,8 +74,8 @@ class RoundedTest {
 		Rounded op = new Rounded();
 
 		{
-			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {5});
-			assertEquals(5,retval);
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {5L});
+			assertEquals(5L,retval);
 		}
 	}
 
@@ -86,12 +86,12 @@ class RoundedTest {
 
 		{
 			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {2.6});
-			assertEquals(3,retval);
+			assertEquals(3L,retval);
 		}
 
 		{
 			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {2.5});
-			assertEquals(3,retval);
+			assertEquals(3L,retval);
 		}
 	}
 
@@ -102,7 +102,7 @@ class RoundedTest {
 
 		{
 			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {2.4});
-			assertEquals(2,retval);
+			assertEquals(2L,retval);
 		}
 	}
 }

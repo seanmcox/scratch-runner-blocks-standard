@@ -55,7 +55,7 @@ class TimeAndDateTest {
 		LocalDateTime bra = LocalDateTime.now();
 		Number result = (Number)op.execute(new AllBadRuntime(), new AllBadRunner(), new AllBadSprite(), new Object[] {"second"});
 		LocalDateTime ket = LocalDateTime.now();
-		assertTrue((result instanceof Long)||(result instanceof Integer));
+		assertTrue(result instanceof Long);
 		int braValue = bra.getSecond();
 		int ketValue = ket.getSecond();
 		if(braValue<ketValue)
@@ -70,13 +70,13 @@ class TimeAndDateTest {
 		LocalDateTime bra = LocalDateTime.now();
 		Number result = (Number)op.execute(new AllBadRuntime(), new AllBadRunner(), new AllBadSprite(), new Object[] {"minute"});
 		LocalDateTime ket = LocalDateTime.now();
-		assertTrue((result instanceof Long)||(result instanceof Integer));
+		assertTrue(result instanceof Long);
 		int braValue = bra.getMinute();
 		int ketValue = ket.getMinute();
 		if(braValue<ketValue)
-			assertTrue((result.intValue()>=braValue)&&(result.intValue()<=ketValue));
+			assertTrue((result.longValue()>=braValue)&&(result.longValue()<=ketValue));
 		else
-			assertTrue((result.intValue()>=braValue)||(result.intValue()<=ketValue));
+			assertTrue((result.longValue()>=braValue)||(result.longValue()<=ketValue));
 	}
 
 	@Test
@@ -85,13 +85,13 @@ class TimeAndDateTest {
 		LocalDateTime bra = LocalDateTime.now();
 		Number result = (Number)op.execute(new AllBadRuntime(), new AllBadRunner(), new AllBadSprite(), new Object[] {"hour"});
 		LocalDateTime ket = LocalDateTime.now();
-		assertTrue((result instanceof Long)||(result instanceof Integer));
+		assertTrue(result instanceof Long);
 		int braValue = bra.getHour();
 		int ketValue = ket.getHour();
 		if(braValue<ketValue)
-			assertTrue((result.intValue()>=braValue)&&(result.intValue()<=ketValue));
+			assertTrue((result.longValue()>=braValue)&&(result.longValue()<=ketValue));
 		else
-			assertTrue((result.intValue()>=braValue)||(result.intValue()<=ketValue));
+			assertTrue((result.longValue()>=braValue)||(result.longValue()<=ketValue));
 	}
 
 	@Test
@@ -100,13 +100,13 @@ class TimeAndDateTest {
 		LocalDateTime bra = LocalDateTime.now();
 		Number result = (Number)op.execute(new AllBadRuntime(), new AllBadRunner(), new AllBadSprite(), new Object[] {"day of week"});
 		LocalDateTime ket = LocalDateTime.now();
-		assertTrue((result instanceof Long)||(result instanceof Integer));
+		assertTrue(result instanceof Long);
 		int braValue = bra.getDayOfWeek().getValue();
 		int ketValue = ket.getDayOfWeek().getValue();
 		if(braValue<ketValue)
-			assertTrue((result.intValue()>=braValue)&&(result.intValue()<=ketValue));
+			assertTrue((result.longValue()>=braValue)&&(result.longValue()<=ketValue));
 		else
-			assertTrue((result.intValue()>=braValue)||(result.intValue()<=ketValue));
+			assertTrue((result.longValue()>=braValue)||(result.longValue()<=ketValue));
 	}
 
 	@Test
@@ -115,13 +115,13 @@ class TimeAndDateTest {
 		LocalDateTime bra = LocalDateTime.now();
 		Number result = (Number)op.execute(new AllBadRuntime(), new AllBadRunner(), new AllBadSprite(), new Object[] {"date"});
 		LocalDateTime ket = LocalDateTime.now();
-		assertTrue((result instanceof Long)||(result instanceof Integer));
+		assertTrue(result instanceof Long);
 		int braValue = bra.getDayOfMonth();
 		int ketValue = ket.getDayOfMonth();
 		if(braValue<ketValue)
-			assertTrue((result.intValue()>=braValue)&&(result.intValue()<=ketValue));
+			assertTrue((result.longValue()>=braValue)&&(result.longValue()<=ketValue));
 		else
-			assertTrue((result.intValue()>=braValue)||(result.intValue()<=ketValue));
+			assertTrue((result.longValue()>=braValue)||(result.longValue()<=ketValue));
 	}
 
 	@Test
@@ -130,13 +130,13 @@ class TimeAndDateTest {
 		LocalDateTime bra = LocalDateTime.now();
 		Number result = (Number)op.execute(new AllBadRuntime(), new AllBadRunner(), new AllBadSprite(), new Object[] {"month"});
 		LocalDateTime ket = LocalDateTime.now();
-		assertTrue((result instanceof Long)||(result instanceof Integer));
+		assertTrue(result instanceof Long);
 		int braValue = bra.getMonth().getValue();
 		int ketValue = ket.getMonth().getValue();
 		if(braValue<ketValue)
-			assertTrue((result.intValue()>=braValue)&&(result.intValue()<=ketValue));
+			assertTrue((result.longValue()>=braValue)&&(result.longValue()<=ketValue));
 		else
-			assertTrue((result.intValue()>=braValue)||(result.intValue()<=ketValue));
+			assertTrue((result.longValue()>=braValue)||(result.longValue()<=ketValue));
 	}
 
 	@Test
@@ -145,12 +145,12 @@ class TimeAndDateTest {
 		LocalDateTime bra = LocalDateTime.now();
 		Number result = (Number)op.execute(new AllBadRuntime(), new AllBadRunner(), new AllBadSprite(), new Object[] {"year"});
 		LocalDateTime ket = LocalDateTime.now();
-		assertTrue((result instanceof Long)||(result instanceof Integer));
+		assertTrue(result instanceof Long);
 		int braValue = bra.getYear();
 		int ketValue = ket.getYear();
 		if(braValue<ketValue)
-			assertTrue((result.intValue()>=braValue)&&(result.intValue()<=ketValue));
+			assertTrue((result.longValue()>=braValue)&&(result.longValue()<=ketValue));
 		else
-			assertTrue((result.intValue()>=braValue)||(result.intValue()<=ketValue));
+			assertTrue((result.longValue()>=braValue)||(result.longValue()<=ketValue));
 	}
 }

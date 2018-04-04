@@ -54,8 +54,8 @@ public class ChangeVarBy implements OpcodeAction {
 		String s0 = (String)arguments[0];
 		Number n1 = (Number)arguments[1];
 		Number oldValue = OpcodeUtils.getNumericValue(context.getContextVariableValueByName(s0));
-		if((oldValue instanceof Integer)&&(n1 instanceof Integer))
-			context.setContextVariableValueByName(s0, oldValue.intValue()+n1.intValue());
+		if((oldValue instanceof Long)&&(n1 instanceof Long))
+			context.setContextVariableValueByName(s0, oldValue.longValue()+n1.longValue());
 		context.setContextVariableValueByName(s0, oldValue.doubleValue()+n1.doubleValue());
 		return null;
 	}
