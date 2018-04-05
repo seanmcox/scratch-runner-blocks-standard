@@ -40,8 +40,7 @@ public class RandomFromTo extends AbstractOpcodeValue {
 		if((n0 instanceof Long)&&(n1 instanceof Long)) {
 			long min=Math.min(n0.longValue(), n1.longValue());
 			long max=Math.max(n0.longValue(), n1.longValue());
-			
-			return min+(long)(random.nextDouble()*(max-min));
+			return min+(long)(random.nextDouble()*(max-min+1));
 		}
 		double min=Math.min(n0.doubleValue(), n1.doubleValue());
 		double max=Math.max(n0.doubleValue(), n1.doubleValue());

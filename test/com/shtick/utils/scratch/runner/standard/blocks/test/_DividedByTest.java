@@ -31,21 +31,25 @@ class _DividedByTest {
 
 		{ // double / double
 			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1.5,0.5});
+			assertTrue(retval instanceof Double);
 			assertEqualWithinMargin(3.0,((Number)retval).doubleValue(),0.00001);
 		}
 
 		{ // int / int
-			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {2,1});
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {2L,1L});
+			assertTrue(retval instanceof Long);
 			assertEqualWithinMargin(2.0,((Number)retval).doubleValue(),0.00001);
 		}
 
 		{ // double / double w/remainder
 			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1.5,1.1});
+			assertTrue(retval instanceof Double);
 			assertEqualWithinMargin(1.363636,((Number)retval).doubleValue(),0.00001);
 		}
 
 		{ // int / int w/remainder
-			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1,2});
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1L,2L});
+			assertTrue(retval instanceof Double);
 			assertEqualWithinMargin(0.5,((Number)retval).doubleValue(),0.00001);
 		}
 		
