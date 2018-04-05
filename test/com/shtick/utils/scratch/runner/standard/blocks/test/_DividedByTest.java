@@ -39,6 +39,16 @@ class _DividedByTest {
 			assertEqualWithinMargin(2.0,((Number)retval).doubleValue(),0.00001);
 		}
 
+		{ // double / double w/remainder
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1.5,1.1});
+			assertEqualWithinMargin(1.363636,((Number)retval).doubleValue(),0.00001);
+		}
+
+		{ // int / int w/remainder
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1,2});
+			assertEqualWithinMargin(0.5,((Number)retval).doubleValue(),0.00001);
+		}
+		
 		try {
 			op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1});
 			fail("Exception expected.");
