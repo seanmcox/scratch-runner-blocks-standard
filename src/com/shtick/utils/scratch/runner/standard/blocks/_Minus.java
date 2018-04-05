@@ -34,8 +34,8 @@ public class _Minus extends AbstractOpcodeValue {
 	public Object execute(ScratchRuntime runtime, ScriptTupleRunner runner, ScriptContext context, Object[] arguments) {
 		Number n0 = (Number)arguments[0];
 		Number n1 = (Number)arguments[1];
-		if((n0 instanceof Integer)&&(n1 instanceof Integer))
-			return n0.intValue()-n1.intValue();
+		if((n0 instanceof Long)&&(n1 instanceof Long))
+			return n0.longValue()-n1.longValue();
 		return n0.doubleValue()-n1.doubleValue();
 	}
 

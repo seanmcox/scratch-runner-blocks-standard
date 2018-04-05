@@ -3,13 +3,10 @@
  */
 package com.shtick.utils.scratch.runner.standard.blocks;
 
-import java.util.Arrays;
-
 import com.shtick.utils.scratch.runner.core.OpcodeAction;
 import com.shtick.utils.scratch.runner.core.OpcodeSubaction;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
-import com.shtick.utils.scratch.runner.core.elements.BlockTuple;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 
 /**

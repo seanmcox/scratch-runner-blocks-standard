@@ -35,8 +35,8 @@ public class Abs extends AbstractOpcodeValue {
 		Number n0 = (Number)arguments[0];
 		if(n0.doubleValue()>0)
 			return n0;
-		if(n0 instanceof Integer)
-			return -n0.intValue();
+		if(n0 instanceof Long)
+			return -n0.longValue();
 		return -n0.doubleValue();
 	}
 

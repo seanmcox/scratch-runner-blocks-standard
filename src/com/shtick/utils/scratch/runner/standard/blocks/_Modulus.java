@@ -34,10 +34,10 @@ public class _Modulus extends AbstractOpcodeValue {
 	public Object execute(ScratchRuntime runtime, ScriptTupleRunner runner, ScriptContext context, Object[] arguments) {
 		Number n0 = (Number)arguments[0];
 		Number n1 = (Number)arguments[1];
-		if((n0 instanceof Integer)&&(n1 instanceof Integer)&&((n0.intValue()%n1.intValue())==0)) {
-			if(n1.intValue()==0)
+		if((n0 instanceof Long)&&(n1 instanceof Long)&&((n0.longValue()%n1.longValue())==0)) {
+			if(n1.longValue()==0)
 				return "NaN";
-			return (n0.intValue()%n1.intValue()+n1.intValue())%n1.intValue();
+			return (n0.longValue()%n1.longValue()+n1.longValue())%n1.longValue();
 		}
 		Double retval = (n0.doubleValue()%n1.doubleValue()+n1.doubleValue())%n1.doubleValue();
 		if(retval.isNaN())
