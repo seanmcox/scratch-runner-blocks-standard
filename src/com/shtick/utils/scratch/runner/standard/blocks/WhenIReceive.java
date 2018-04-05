@@ -79,6 +79,7 @@ public class WhenIReceive implements OpcodeHat {
 	 * @return A Set of ScriptTupleRunners. Modification of the set has no side-effects.
 	 */
 	public Set<ScriptTupleRunner> broadcast(String message) {
+		System.out.println("Broadcast: "+message);
 		java.util.List<ScriptTuple> messageListeners;
 		synchronized(listeners) {
 			messageListeners = listeners.get(message);

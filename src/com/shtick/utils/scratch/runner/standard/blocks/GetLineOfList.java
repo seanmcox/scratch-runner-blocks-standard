@@ -3,13 +3,10 @@
  */
 package com.shtick.utils.scratch.runner.standard.blocks;
 
-import java.util.Arrays;
-
 import com.shtick.utils.scratch.runner.core.OpcodeUtils;
 import com.shtick.utils.scratch.runner.core.OpcodeValue;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
-import com.shtick.utils.scratch.runner.core.elements.BlockTuple;
 import com.shtick.utils.scratch.runner.core.elements.List;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 
@@ -63,6 +60,7 @@ public class GetLineOfList implements OpcodeValue {
 		}
 		catch(IndexOutOfBoundsException t) {
 			System.err.println("WARNING: \""+getOpcode()+"\": Invalid index of list, "+s1+". "+t.getMessage());
+			System.err.println(runner.getStackTrace());
 			return "";
 		}
 	}
