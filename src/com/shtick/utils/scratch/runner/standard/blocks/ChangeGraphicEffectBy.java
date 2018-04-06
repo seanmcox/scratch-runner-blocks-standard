@@ -44,8 +44,8 @@ public class ChangeGraphicEffectBy implements OpcodeAction {
 		String s0 = (String)arguments[0];
 		Number n1 = (Number)arguments[1];
 		Number oldValue = sprite.getEffect(s0);
-		if((oldValue instanceof Integer)&&(n1 instanceof Integer))
-			sprite.setEffect(s0, oldValue.intValue()+n1.intValue());
+		if((oldValue instanceof Long)&&(n1 instanceof Long))
+			sprite.setEffect(s0, oldValue.longValue()+n1.longValue());
 		sprite.setEffect(s0, oldValue.doubleValue()+n1.doubleValue());
 		return null;
 	}

@@ -38,8 +38,8 @@ public class ComputeFunctionOf extends AbstractOpcodeValue {
 		case "abs":
 			if(n1.doubleValue()>0)
 				return n1;
-			if(n1 instanceof Integer)
-				return -n1.intValue();
+			if(n1 instanceof Long)
+				return -n1.longValue();
 			return -n1.doubleValue();
 		case "sqrt":
 			if(n1.doubleValue()<0)

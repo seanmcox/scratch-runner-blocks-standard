@@ -33,9 +33,9 @@ public class Rounded extends AbstractOpcodeValue {
 	@Override
 	public Object execute(ScratchRuntime runtime, ScriptTupleRunner runner, ScriptContext context, Object[] arguments) {
 		Number n0 = (Number)arguments[0];
-		if(n0 instanceof Integer)
+		if(n0 instanceof Long)
 			return n0;
-		return (int)Math.round(n0.doubleValue());
+		return (long)Math.round(n0.doubleValue());
 	}
 
 }
