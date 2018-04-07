@@ -43,12 +43,14 @@ public class DoRepeat implements OpcodeControl {
 	@Override
 	public BlockTuple[] execute(java.util.List<Object> arguments) {
 		java.util.List<BlockTuple> subtuples = (java.util.List<BlockTuple>)arguments.get(1);
-		BlockTuple[] retval = new BlockTuple[subtuples.size()+5];
-		BlockTuple readVar = new ReadLocalVarBlockTuple(0);
-		BlockTuple setVar = new SetLocalVarBlockTuple(0, 1);
+		BlockTuple[] retval = new BlockTuple[subtuples.size()+6];
+		BlockTuple readVar0 = new ReadLocalVarBlockTuple(0);
+		BlockTuple readVar1 = new ReadLocalVarBlockTuple(1);
+		BlockTuple setVar0 = new SetLocalVarBlockTuple(0, 1);
+		BlockTuple setVar1 = new SetLocalVarBlockTuple(1, arguments.get(0));
 		
 		BlockTuple test = new BlockTuple() {
-			java.util.List<Object> args = Collections.unmodifiableList(Arrays.asList(readVar,arguments.get(0)));
+			java.util.List<Object> args = Collections.unmodifiableList(Arrays.asList(readVar0,readVar1));
 			@Override
 			public Object[] toArray() {
 				return null;
@@ -63,16 +65,17 @@ public class DoRepeat implements OpcodeControl {
 			}
 		};
 		BlockTuple incrementVar = new ChangeLocalVarByBlockTuple(0, 1);
-		retval[0] = setVar;
-		retval[1] = new TestBlockTuple(test);
-		retval[2] = new TrueJumpBlockTuple(retval.length);
-		int i=3;
+		retval[0] = setVar0;
+		retval[1] = setVar1;
+		retval[2] = new TestBlockTuple(test);
+		retval[3] = new TrueJumpBlockTuple(retval.length);
+		int i=4;
 		for(BlockTuple subtuple:subtuples) {
 			retval[i] = subtuple;
 			i++;
 		}
 		retval[retval.length-2] = incrementVar;
-		retval[retval.length-1] = new BasicJumpBlockTuple(1);
+		retval[retval.length-1] = new BasicJumpBlockTuple(2);
 		return retval;
 	}
 }

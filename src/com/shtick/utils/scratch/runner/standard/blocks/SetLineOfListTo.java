@@ -46,6 +46,7 @@ public class SetLineOfListTo implements OpcodeAction {
 		}
 		catch(IndexOutOfBoundsException t) {
 			System.err.println("WARNING: \""+getOpcode()+"\": Invalid index of list, "+s1+". "+t.getMessage());
+			System.err.println(runner.getStackTrace());
 		}
 		return null;
 	}
