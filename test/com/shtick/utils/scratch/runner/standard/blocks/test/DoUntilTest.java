@@ -56,7 +56,7 @@ class DoUntilTest {
 		BlockTuple[] result = op.execute(arguments);
 		assertEquals(4,result.length);
 		assertTrue(result[0] instanceof TestBlockTuple);
-		assertTrue(result[0].getArguments().get(0)==((TestBlockTuple)result[0]).getArguments().get(0));
+		assertTrue(arguments.get(0)==((TestBlockTuple)result[0]).getArguments().get(0));
 		assertTrue(result[1] instanceof TrueJumpBlockTuple);
 		assertEquals(4,result[1].getArguments().get(0));
 		assertEquals(subscript.get(0),result[2]);
