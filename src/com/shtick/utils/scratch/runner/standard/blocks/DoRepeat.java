@@ -51,10 +51,22 @@ public class DoRepeat implements OpcodeControl {
 		
 		BlockTuple test = new BlockTuple() {
 			java.util.List<Object> args = Collections.unmodifiableList(Arrays.asList(readVar0,readVar1));
+			Object[] array = null;
+			
 			@Override
 			public Object[] toArray() {
-				return null;
+				if(array==null) {
+					array = new Object[args.size()+1];
+					array[0] = getOpcode();
+					int i=1;
+					for(Object arg:args) {
+						array[i] = arg;
+						i++;
+					}
+				}
+				return array;
 			}
+			
 			@Override
 			public String getOpcode() {
 				return _GreaterThan.OPCODE;
