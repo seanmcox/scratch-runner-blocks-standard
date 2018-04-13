@@ -40,6 +40,10 @@ public class DoPlaySoundAndWait implements OpcodeAction {
 	public OpcodeSubaction execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context,
 			Object[] arguments) {
 		final SoundMonitor soundMonitor = context.playSoundByName((String)arguments[0]);
+		if(soundMonitor==null) {
+			System.err.println("WARNING: \""+getOpcode()+"\": Sound did not play (and wait) as expected: "+arguments[0]+" context="+context.getObjName());
+			return null;
+		}
 		return new OpcodeSubaction() {
 			
 			@Override
