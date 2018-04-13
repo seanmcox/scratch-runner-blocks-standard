@@ -7,6 +7,7 @@ import com.shtick.utils.scratch.runner.core.OpcodeAction;
 import com.shtick.utils.scratch.runner.core.OpcodeSubaction;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
+import com.shtick.utils.scratch.runner.core.SoundMonitor;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 
 /**
@@ -37,7 +38,9 @@ public class PlaySound implements OpcodeAction {
 	@Override
 	public OpcodeSubaction execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context,
 			Object[] arguments) {
-		context.playSoundByName((String)arguments[0]);
+		SoundMonitor soundMonitor = context.playSoundByName((String)arguments[0]);
+		if(soundMonitor==null)
+			System.err.println("WARNING: \""+getOpcode()+"\": Sound did not play as expected: "+arguments[0]+" context="+context.getObjName());
 		return null;
 	}
 
