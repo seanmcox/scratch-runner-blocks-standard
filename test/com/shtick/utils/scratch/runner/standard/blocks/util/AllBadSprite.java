@@ -111,8 +111,9 @@ public class AllBadSprite implements Sprite {
 	}
 	
 	@Override
-	public void setCurrentCostumeIndex(int i) {
+	public boolean setCurrentCostumeIndex(int i) {
 		fail("setCurrentCostumeIndex called unnecessarily");
+		return false;
 	}
 	
 	/* (non-Javadoc)
@@ -137,8 +138,9 @@ public class AllBadSprite implements Sprite {
 	 * @see com.shtick.utils.scratch.runner.core.elements.Sprite#setCostumeByName(java.lang.String)
 	 */
 	@Override
-	public void setCostumeByName(String name) {
+	public boolean setCostumeByName(String name) {
 		fail("setCostumeByName called unnecessarily");
+		return false;
 	}
 
 	@Override

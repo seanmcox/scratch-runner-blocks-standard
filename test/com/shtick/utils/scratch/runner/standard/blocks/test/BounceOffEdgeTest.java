@@ -173,23 +173,6 @@ class BounceOffEdgeTest {
 		}
 		
 		@Override
-		public void setCurrentCostumeIndex(int i) {
-			fail("setCurrentCostumeIndex called unnecessarily");
-		}
-		
-		@Override
-		public boolean isVisible() {
-			fail("isVisible called unnecessarily");
-			return true;
-		}
-		
-		@Override
-		public boolean isClone() {
-			fail("isClone called unnecessarily");
-			return false;
-		}
-		
-		@Override
 		public void gotoXY(double scratchX, double scratchY) {
 			x = scratchX;
 			y = scratchY;
