@@ -40,14 +40,20 @@ public class LookLike implements OpcodeAction {
 	public OpcodeSubaction execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context,
 			Object[] arguments) {
 		if(!(context.getContextObject() instanceof Sprite))
-			throw new IllegalArgumentException("bounceOffEdge opcode only valid in Sprite context.");
+			throw new IllegalArgumentException(getOpcode()+" opcode only valid in Sprite context.");
 		Sprite sprite = (Sprite)context.getContextObject();
 		Object a0 = arguments[0];
 		if(a0 instanceof Boolean)
 			a0 = OpcodeUtils.getNumericValue(a0);
-		if(a0 instanceof Number)
-			sprite.setCurrentCostumeIndex(((Number)a0).intValue()-1);
-		sprite.setCostumeByName(OpcodeUtils.getStringValue(a0));
+		if(a0 instanceof Number) {
+			if(!sprite.setCurrentCostumeIndex(((Number)a0).intValue()-1))
+				sprite.setCurrentCostumeIndex(1);
+		}
+		if(!sprite.setCostumeByName(OpcodeUtils.getStringValue(a0))) {
+			Number n0=OpcodeUtils.getNumericValue(a0);
+			if(!sprite.setCurrentCostumeIndex(((Number)n0).intValue()-1))
+				System.err.println("WARNING: Costume name, "+a0+", not found for sprite, "+context.getObjName());
+		}
 		return null;
 	}
 
