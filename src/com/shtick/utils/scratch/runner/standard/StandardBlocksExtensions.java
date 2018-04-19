@@ -59,12 +59,11 @@ public class StandardBlocksExtensions {
 	 * @param context
 	 * @param procName 
 	 * @param params 
-	 * @param runner 
 	 * @return An OpcodeSubaction of type SUBSCRIPT giving the subscript to be run.
 	 * 
 	 */
-	public static OpcodeSubaction call(ScriptContext context, String procName, Object[] params, ScriptTupleRunner runner) {
-		return Activator.PROC_DEF.call(context, procName, params, runner);
+	public static OpcodeSubaction call(ScriptContext context, String procName, Object[] params) {
+		return Activator.PROC_DEF.call(context, procName, params);
 	}
 
 	/**

@@ -42,6 +42,6 @@ public class Call implements OpcodeAction {
 			Object[] arguments) {
 		String s0 = (String)arguments[0];
 		Object[] args = (Object[])arguments[1];
-		return StandardBlocksExtensions.call(context, s0,args, scriptRunner);
+		return StandardBlocksExtensions.call(context, s0,args);
 	}
 }

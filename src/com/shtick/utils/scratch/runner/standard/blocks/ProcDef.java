@@ -106,11 +106,10 @@ public class ProcDef implements OpcodeHat {
 	 * @param context
 	 * @param procName 
 	 * @param params 
-	 * @param runner 
 	 * @return An OpcodeSubaction of type SUBSCRIPT giving the subscript to be run.
 	 * 
 	 */
-	public OpcodeSubaction call(ScriptContext context, String procName, Object[] params, ScriptTupleRunner runner) {
+	public OpcodeSubaction call(ScriptContext context, String procName, Object[] params) {
 		ScriptContext contextObject = context.getContextObject();
 		ProcedureDefinition procDef;
 		synchronized(listenersByContextObject) {
