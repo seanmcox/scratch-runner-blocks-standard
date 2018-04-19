@@ -60,6 +60,11 @@ public class WhenSceneStarts implements OpcodeHat {
 		});
 	}
 	
+	/**
+	 * 
+	 * @param sceneName
+	 * @return true if scripts associated with the given scene change are still running.
+	 */
 	public boolean areSceneChangeScriptsRunning(String sceneName) {
 		java.util.List<ScriptTupleRunner> runners = scriptTupleRunners.get(sceneName);
 		if(runners == null)
