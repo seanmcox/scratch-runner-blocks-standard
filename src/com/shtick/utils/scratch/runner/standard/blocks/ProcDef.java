@@ -3,7 +3,6 @@
  */
 package com.shtick.utils.scratch.runner.standard.blocks;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 import com.shtick.utils.scratch.runner.core.OpcodeHat;
@@ -15,6 +14,7 @@ import com.shtick.utils.scratch.runner.core.ValueListener;
 import com.shtick.utils.scratch.runner.core.elements.List;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
+import com.shtick.utils.scratch.runner.core.elements.Sprite;
 
 /**
  * <p>This opcode isn't well documented. Somewhat irritatingly, the definition derived from inspection breaks the conventions of the ScriptTuple encoding.
@@ -34,7 +34,7 @@ import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
  *
  */
 public class ProcDef implements OpcodeHat {
-	private HashMap<String,HashMap<String,ProcedureDefinition>> listenersByContextObject = new HashMap<>();
+	private HashMap<ScriptContext,HashMap<String,ProcedureDefinition>> listenersByContextObject = new HashMap<>();
 
 	/* (non-Javadoc)
 	 * @see com.shtick.utils.scratch.runner.core.Opcode#getOpcode()
@@ -79,9 +79,9 @@ public class ProcDef implements OpcodeHat {
 
 		ScriptContext contextObject = script.getContext().getContextObject();
 		synchronized(listenersByContextObject) {
-			if(!listenersByContextObject.containsKey(contextObject.getObjName()))
-				listenersByContextObject.put(contextObject.getObjName(), new HashMap<>());
-			listenersByContextObject.get(contextObject.getObjName()).put(s0,new ProcedureDefinition(s0, s1, script, b3));
+			if(!listenersByContextObject.containsKey(contextObject))
+				listenersByContextObject.put(contextObject, new HashMap<>());
+			listenersByContextObject.get(contextObject).put(s0,new ProcedureDefinition(s0, s1, script, b3));
 		}
 	}
 	
@@ -93,12 +93,12 @@ public class ProcDef implements OpcodeHat {
 		String s0 = (String)params[0];
 		ScriptContext contextObject = script.getContext().getContextObject();
 		synchronized(listenersByContextObject) {
-			if(!listenersByContextObject.containsKey(contextObject.getObjName()))
+			if(!listenersByContextObject.containsKey(contextObject))
 				return;
-			HashMap<String,ProcedureDefinition> listeners = listenersByContextObject.get(contextObject.getObjName());
+			HashMap<String,ProcedureDefinition> listeners = listenersByContextObject.get(contextObject);
 			listeners.remove(s0);
 			if(listeners.size()==0)
-				listenersByContextObject.remove(contextObject.getObjName());
+				listenersByContextObject.remove(contextObject);
 		}
 	}
 	
@@ -114,13 +114,13 @@ public class ProcDef implements OpcodeHat {
 		ScriptContext contextObject = context.getContextObject();
 		ProcedureDefinition procDef;
 		synchronized(listenersByContextObject) {
-			if(!listenersByContextObject.containsKey(contextObject.getObjName())) {
+			if(!listenersByContextObject.containsKey(contextObject)) {
 				String objectString = ""+contextObject;
 				if(contextObject != null)
-					objectString = "\""+contextObject.getObjName()+"\" - "+contextObject;
-				throw new IllegalArgumentException("The provided context object has no procedures defined: "+objectString);
+					objectString = "\""+contextObject.getObjName()+"\" - "+((contextObject instanceof Sprite)?((Sprite)contextObject).isClone():"")+" - "+contextObject;
+				throw new IllegalArgumentException("The provided context object has no procedures defined: "+objectString+"\nTried to call: "+procName);
 			}
-			procDef = listenersByContextObject.get(contextObject.getObjName()).get(procName);
+			procDef = listenersByContextObject.get(contextObject).get(procName);
 		}
 		if(procDef==null) {
 			String objectString = "\""+contextObject.getObjName()+"\" - "+contextObject;
