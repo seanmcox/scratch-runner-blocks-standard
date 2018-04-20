@@ -35,13 +35,11 @@ public class _DividedBy extends AbstractOpcodeValue {
 	public Object execute(ScratchRuntime runtime, ScriptTupleRunner runner, ScriptContext context, Object[] arguments) {
 		Number n0 = (Number)arguments[0];
 		Number n1 = (Number)arguments[1];
-		if((n0 instanceof Long)&&(n1 instanceof Long)&&((n0.longValue()%n1.longValue())==0)) {
-			if(n1.intValue()==0)
-				return "NaN";
-			return n0.longValue()/n1.longValue();
-		}
+		long l1 = n1.longValue();
+		if((n0 instanceof Long)&&(n1 instanceof Long)&&(l1!=0)&&((n0.longValue()%l1)==0))
+			return n0.longValue()/l1;
 		Double retval =  n0.doubleValue()/n1.doubleValue();
-		if(retval.isNaN())
+		if(retval.isNaN()||retval.isInfinite())
 			return "NaN";
 		return retval;
 	}

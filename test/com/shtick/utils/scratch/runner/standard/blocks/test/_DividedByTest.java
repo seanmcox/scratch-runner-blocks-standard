@@ -53,6 +53,16 @@ class _DividedByTest {
 			assertEqualWithinMargin(0.5,((Number)retval).doubleValue(),0.00001);
 		}
 		
+		{ // int NaN
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {500,0});
+			assertEquals("NaN",retval);
+		}
+		
+		{ // double NaN
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1.5,0.0});
+			assertEquals("NaN",retval);
+		}
+
 		try {
 			op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1});
 			fail("Exception expected.");
