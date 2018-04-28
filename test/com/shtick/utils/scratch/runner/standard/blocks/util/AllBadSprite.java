@@ -36,6 +36,11 @@ public class AllBadSprite implements Sprite {
 	}
 	
 	@Override
+	public SoundMonitor playSoundByIndex(int index) {
+		throw new UnsupportedOperationException("playSoundByIndex not implemented.");
+	}
+
+	@Override
 	public void setVolume(double volume) {
 		fail("setVolume called unnecessarily");
 	}
