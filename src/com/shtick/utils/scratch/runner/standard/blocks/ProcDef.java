@@ -8,7 +8,6 @@ import java.util.HashMap;
 import com.shtick.utils.scratch.runner.core.OpcodeHat;
 import com.shtick.utils.scratch.runner.core.OpcodeSubaction;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
-import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.SoundMonitor;
 import com.shtick.utils.scratch.runner.core.ValueListener;
 import com.shtick.utils.scratch.runner.core.elements.List;
@@ -296,6 +295,14 @@ public class ProcDef implements OpcodeHat {
 		@Override
 		public SoundMonitor playSoundByName(String soundName) {
 			return parentContext.playSoundByName(soundName);
+		}
+
+		/* (non-Javadoc)
+		 * @see com.shtick.utils.scratch.runner.core.elements.ScriptContext#playSoundByIndex(int)
+		 */
+		@Override
+		public SoundMonitor playSoundByIndex(int index) {
+			return parentContext.playSoundByIndex(index);
 		}
 
 		/* (non-Javadoc)

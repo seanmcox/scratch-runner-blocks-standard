@@ -97,6 +97,11 @@ public class AllBadStage implements Stage {
 		throw new UnsupportedOperationException("Called playSoundByName when not expected.");
 	}
 
+	@Override
+	public SoundMonitor playSoundByIndex(int index) {
+		throw new UnsupportedOperationException("Called playSoundByIndex when not expected.");
+	}
+
 	/* (non-Javadoc)
 	 * @see com.shtick.utils.scratch.runner.core.elements.ScriptContext#setVolume(double)
 	 */
