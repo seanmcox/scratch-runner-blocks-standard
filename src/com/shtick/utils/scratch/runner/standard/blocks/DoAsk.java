@@ -17,6 +17,7 @@ import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
 import com.shtick.utils.scratch.runner.core.elements.Sprite;
 import com.shtick.utils.scratch.runner.standard.StandardBlocksExtensions;
+import com.shtick.utils.scratch.runner.standard.blocks.aux.DoAskUI;
 
 /**
  * @author sean.cox
@@ -46,16 +47,14 @@ public class DoAsk implements OpcodeAction {
 	@Override
 	public OpcodeSubaction execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context,
 			Object[] arguments) {
-		if(!(context.getContextObject() instanceof Sprite))
-			throw new IllegalArgumentException(getOpcode()+" opcode only valid in Sprite context.");
 		String s0 = (String)arguments[0];
-		Sprite sprite = (Sprite)context.getContextObject();
 
-		Image bubbleImage = StandardBlocksExtensions.createTalkBubbleImage(s0);
-		runtime.setSpriteBubbleImage(sprite, bubbleImage);
 		final boolean[] isDone = new boolean[] {false};
-		final JTextField textField = new JTextField();
-		runtime.addComponent(textField, -runtime.getStageWidth()/2, runtime.getStageHeight()/2-30, runtime.getStageWidth(), 30);
+		final DoAskUI textField = new DoAskUI(s0);
+		int height = textField.getPreferredSize().height;
+		int hMargin=15;
+		int vMargin=8;
+		runtime.addComponent(textField, -runtime.getStageWidth()/2+hMargin, runtime.getStageHeight()/2-height-vMargin, runtime.getStageWidth()-hMargin*2, height);
 		textField.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -69,10 +68,8 @@ public class DoAsk implements OpcodeAction {
 			
 			@Override
 			public boolean shouldYield() {
-				if(isDone[0]) {
-					runtime.setSpriteBubbleImage(null,null);
+				if(isDone[0])
 					return false;
-				}
 				return true;
 			}
 			
@@ -88,7 +85,6 @@ public class DoAsk implements OpcodeAction {
 
 			@Override
 			public boolean isSubscriptAtomic() {
-				// TODO Auto-generated method stub
 				return false;
 			}
 		};

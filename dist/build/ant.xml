@@ -15,7 +15,7 @@
                 <attribute name="Bundle-Version" value="0.1.0"/>
                 <attribute name="Bundle-Activator" value="com.shtick.utils.scratch.runner.standard.bundle.Activator"/>
                 <attribute name="Export-Package" value="com.shtick.utils.scratch.runner.standard"/>
-                <attribute name="Import-Package" value="org.osgi.framework,com.shtick.utils.scratch.runner.core,com.shtick.utils.scratch.runner.core.elements,com.shtick.utils.scratch.runner.core.elements.control,javax.swing"/>
+                <attribute name="Import-Package" value="org.osgi.framework,com.shtick.utils.scratch.runner.core,com.shtick.utils.scratch.runner.core.elements,com.shtick.utils.scratch.runner.core.elements.control,javax.swing,javax.swing.border"/>
             </manifest>
             <fileset dir="../../bin"/>
         	
