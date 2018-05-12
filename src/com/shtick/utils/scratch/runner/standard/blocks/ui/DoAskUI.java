@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.shtick.utils.scratch.runner.standard.blocks.aux;
+package com.shtick.utils.scratch.runner.standard.blocks.ui;
 
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;

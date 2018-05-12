@@ -17,7 +17,7 @@ import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
 import com.shtick.utils.scratch.runner.core.elements.Sprite;
 import com.shtick.utils.scratch.runner.standard.StandardBlocksExtensions;
-import com.shtick.utils.scratch.runner.standard.blocks.aux.DoAskUI;
+import com.shtick.utils.scratch.runner.standard.blocks.ui.DoAskUI;
 
 /**
  * @author sean.cox
