@@ -169,7 +169,7 @@ public class DoAskUI extends JPanel{
 	}
 	
 	private class DoAskButton extends AbstractButton{
-		private ImageIcon image = new ImageIcon(getClass().getResource("/com/shtick/utils/scratch/runner/standard/blocks/aux/DoAskButton.png"));
+		private ImageIcon image = new ImageIcon(getClass().getResource("/com/shtick/utils/scratch/runner/standard/blocks/ui/DoAskButton.png"));
 		
 		public DoAskButton() {
 			addMouseListener(new MouseListener() {
