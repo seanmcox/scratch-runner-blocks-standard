@@ -35,7 +35,7 @@ public class LetterOf extends AbstractOpcodeValue {
 		Number n0 = (Number)arguments[0];
 		String s1 = (String)arguments[1];
 		try {
-			return ""+s1.charAt(n0.intValue());
+			return ""+s1.charAt(n0.intValue()-1);
 		}
 		catch(IndexOutOfBoundsException t) {
 			return "";
