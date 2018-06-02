@@ -41,9 +41,11 @@ public class ContentsOfList implements OpcodeValue {
 	
 	private static String getContents(List list) {
 		boolean all1 = true;
+		if(list==null)
+			return "";
 		Object[] contents = list.getContents();
 		for(Object item:contents) {
-			if(item.toString().length()>0) {
+			if(item.toString().length()>1) {
 				all1 = false;
 				break;
 			}
