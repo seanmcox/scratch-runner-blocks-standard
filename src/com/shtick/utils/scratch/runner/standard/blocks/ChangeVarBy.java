@@ -3,14 +3,11 @@
  */
 package com.shtick.utils.scratch.runner.standard.blocks;
 
-import java.util.Arrays;
-
 import com.shtick.utils.scratch.runner.core.OpcodeAction;
 import com.shtick.utils.scratch.runner.core.OpcodeSubaction;
 import com.shtick.utils.scratch.runner.core.OpcodeUtils;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
-import com.shtick.utils.scratch.runner.core.elements.BlockTuple;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 
 /**
@@ -45,12 +42,6 @@ public class ChangeVarBy implements OpcodeAction {
 	@Override
 	public OpcodeSubaction execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context,
 			Object[] arguments) {
-		if(arguments.length!=2)
-			throw new IllegalArgumentException("2 argument expected for "+getOpcode()+" opcode");
-		if(!OpcodeUtils.isEvaluable(arguments[0]))
-			throw new IllegalArgumentException("The first argument for opcode, "+getOpcode()+", must be evaluable.");
-		if(!OpcodeUtils.isEvaluable(arguments[1]))
-			throw new IllegalArgumentException("The second argument for opcode, "+getOpcode()+", must be evaluable.");
 		String s0 = (String)arguments[0];
 		Number n1 = (Number)arguments[1];
 		Number oldValue = OpcodeUtils.getNumericValue(context.getContextVariableValueByName(s0));
