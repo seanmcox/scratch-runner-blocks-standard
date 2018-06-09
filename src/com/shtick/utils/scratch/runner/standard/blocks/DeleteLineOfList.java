@@ -47,8 +47,7 @@ public class DeleteLineOfList implements OpcodeAction {
 				n0 = list.getItemCount();
 			}
 			else if("all".equals(a0)) {
-				while(list.getItemCount()>0)
-					list.deleteItem(1);
+				list.deleteAll();
 				return null;
 			}
 			else {
