@@ -52,7 +52,6 @@ public class StandardBlocksExtensions {
 	 */
 	public static Set<ScriptTupleRunner> broadcast(String message) {
 		return Activator.WHEN_I_RECEIVE.broadcast(message);
-		
 	}
 	
 	/**
