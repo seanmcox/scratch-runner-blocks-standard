@@ -9,7 +9,7 @@ import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
-import com.shtick.utils.scratch.runner.standard.bundle.Activator;
+import com.shtick.utils.scratch.runner.standard.StandardBlocksExtensions;
 
 /**
  * @author sean.cox
@@ -45,7 +45,7 @@ public class StartSceneAndWait implements OpcodeAction {
 			
 			@Override
 			public boolean shouldYield() {
-				if(Activator.WHEN_SCENE_STARTS.areSceneChangeScriptsRunning(s0))
+				if(StandardBlocksExtensions.WHEN_SCENE_STARTS.areSceneChangeScriptsRunning(s0))
 					return true;
 				return false;
 			}
