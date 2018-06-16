@@ -16,20 +16,238 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Set;
 
+import com.shtick.utils.scratch.runner.core.GraphicEffect;
+import com.shtick.utils.scratch.runner.core.Opcode;
 import com.shtick.utils.scratch.runner.core.OpcodeSubaction;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
+import com.shtick.utils.scratch.runner.core.StageMonitorCommand;
 import com.shtick.utils.scratch.runner.core.ValueListener;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
+import com.shtick.utils.scratch.runner.standard.blocks.*;
 import com.shtick.utils.scratch.runner.standard.bundle.Activator;
+import com.shtick.utils.scratch.runner.standard.effects.BrightnessEffect;
+import com.shtick.utils.scratch.runner.standard.effects.GhostEffect;
+import com.shtick.utils.scratch.runner.standard.effects.MosaicEffect;
+import com.shtick.utils.scratch.runner.standard.mcommands.GetVar;
 
 /**
  * @author sean.cox
  *
  */
 public class StandardBlocksExtensions {
+	/**
+	 * WhenIReceive opcode to share.
+	 */
+	public static final WhenIReceive WHEN_I_RECEIVE = new WhenIReceive();
+	/**
+	 * WhenSceneStarts opcode to share.
+	 */
+	public static final WhenSceneStarts WHEN_SCENE_STARTS = new WhenSceneStarts();
+	/**
+	 * 
+	 */
+	public static final ProcDef PROC_DEF = new ProcDef();
+
+	/**
+	 * 
+	 */
+	public static final Collection<Opcode> STANDARD_OPCODES = Collections.unmodifiableCollection(Arrays.asList(
+			new _DividedBy(),
+			new _Equals(),
+			new _GreaterThan(),
+			new _LessThan(),
+			new _LogicalAnd(),
+			new _LogicalOr(),
+			new _Minus(),
+			new _Modulus(),
+			new _Plus(),
+			new _Times(),
+			new Abs(),
+			new Answer(),
+			new AppendToList(),
+			new BackgroundIndex(),
+			new BounceOffEdge(),
+			new Broadcast(),
+			new Call(),
+			new ChangeGraphicEffectBy(),
+			new ChangePenHueBy(),
+			new ChangePenShadeBy(),
+			new ChangePenSizeBy(),
+			new ChangeSizeBy(),
+			// TODO changeTempoBy:
+			new ChangeVarBy(),
+			new ChangeVolumeBy(),
+			new ChangeXPosBy(),
+			new ChangeYPosBy(),
+			new ClearPenTrails(),
+			// TODO color:sees:
+			new ComeToFront(),
+			new ComputeFunctionOf(),
+			new ConcatenateWith(),
+			new ContentsOfList(),
+			new CostumeIndex(),
+			new CreateCloneOf(),
+			new DeleteClone(),
+			new DeleteLineOfList(),
+			new DistanceTo(),
+			new DoAsk(),
+			new DoBroadcastAndWait(),
+			new DoForever(),
+			new DoForeverIf(),
+			new DoForLoop(),
+			new DoIf(),
+			new DoIfElse(),
+			new DoPlaySoundAndWait(),
+			new DoRepeat(),
+			new DoReturn(),
+			new DoUntil(),
+			new DoWaitUntil(),
+			// Don't implement doWhile. It does not appear to be spec'd and in use.
+			// TODO drum:duration:elapsed:from:
+			new FilterReset(),
+			new Forward(),
+			// Don't implement fxTest
+			new GetAttributeOf(),
+			new GetLineOfList(),
+			new GetParam(),
+			new GetUserId(),
+			new GetUserName(),
+			new GlideSecsToXYElapsedFrom(),
+			new GoBackByLayers(),
+			new GotoSpriteOrMouse(),
+			new GotoXY(),
+			new Heading(),
+			new HeadingSet(),
+			new Hide(),
+			// TODO hideAll
+			new HideList(),
+			new HideVariable(),
+			new InsertAtOfList(),
+			// TODO instrument:
+			// TODO isLoud
+			new KeyPressed(),
+			new LetterOf(),
+			new LineCountOfList(),
+			new ListContains(),
+			new LookLike(),
+			// TODO midiInstrument:
+			new MousePressed(),
+			new MouseX(),
+			new MouseY(),
+			new NextCostume(),
+			new NextScene(),
+			new Not(),
+			// TODO noteOn:duration:elapsed:from:
+			new PenColor(),
+			new PenSize(),
+			// TODO playDrum
+			new PlaySound(),
+			new PointTowards(),
+			PROC_DEF,
+			new PutPenDown(),
+			new PutPenUp(),
+			new RandomFromTo(),
+			new ReadVariable(),
+			// TODO rest:elapsed:from:
+			new Rounded(),
+			new Say(),
+			new SayDurationElapsedFrom(),
+			new SayNothing(),
+			new Scale(),
+			new SceneName(),
+			// Don't implement scrollAlign. See: https://wiki.scratch.mit.edu/wiki/Scrolling_(Stage)
+			// Don't implement scrollRight. See: https://wiki.scratch.mit.edu/wiki/Scrolling_(Stage)
+			// Don't implement scrollUp. See: https://wiki.scratch.mit.edu/wiki/Scrolling_(Stage)
+			// TODO senseVideoMotion
+			// TODO sensor:
+			// TODO sensorPressed:
+			new SetGraphicEffectTo(),
+			new SetLineOfListTo(),
+			new SetPenHueTo(),
+			new SetPenShadeTo(),
+			// TODO setRotationStyle
+			new SetSizeTo(),
+			// TODO setTempoTo:
+			new SetVarTo(),
+			// TODO setVideoState
+			// TODO setVideoTransparency
+			new SetVolumeTo(),
+			new Show(),
+			new ShowList(),
+			new ShowVariable(),
+			// TODO soundLevel
+			new Sqrt(),
+			new StampCostume(),
+			new StartScene(),
+			new StartSceneAndWait(),
+			// No longer current: stopAll See: https://wiki.scratch.mit.edu/wiki/Stop_All_(block)
+			// TODO stopAllSounds
+			new StopScripts(),
+			new StringLength(),
+			// TODO tempo
+			new Think(),
+			new ThinkDurationElapsedFrom(),
+			new TimeAndDate(),
+			new Timer(),
+			new TimerReset(),
+			// TODO timestamp
+			new Touching(),
+			// TODO touchingColor:
+			// No longer current: turnAwayFromEdge See: https://wiki.scratch.mit.edu/wiki/Point_Away_From_Edge_(block)
+			new TurnLeft(),
+			new TurnRight(),
+			new Volume(),
+			new WaitElapsedFrom(),
+			// Don't implement warpSpeed. See: https://wiki.scratch.mit.edu/wiki/All_at_Once_(block)
+			new WhenClicked(),
+			new WhenCloned(),
+			new WhenGreenFlag(),
+			WHEN_I_RECEIVE,
+			new WhenKeyPressed(),
+			WHEN_SCENE_STARTS,
+			// TODO whenSensorGreaterThan
+			new Xpos(),
+			new XposSet(),
+			// Don't implement xScroll. See: https://wiki.scratch.mit.edu/wiki/Scrolling_(Stage)
+			new Ypos(),
+			new YposSet()
+			// Don't implement yScroll. See: https://wiki.scratch.mit.edu/wiki/Scrolling_(Stage)			
+			));
+	/**
+	 * 
+	 */
+	public static final Collection<StageMonitorCommand> STANDARD_STAGE_MONITOR_COMMANDS = Collections.unmodifiableCollection(Arrays.asList(
+			new com.shtick.utils.scratch.runner.standard.mcommands.Answer(),
+			// TODO backgroundIndex
+			// TODO costumeIndex
+			new GetVar(),
+			// TODO heading
+			// TODO scale
+			new com.shtick.utils.scratch.runner.standard.mcommands.SceneName(),
+			// TODO senseVideoMotion
+			// TODO soundLevel
+			// TODO tempo
+			new com.shtick.utils.scratch.runner.standard.mcommands.TimeAndDate()
+			// TODO timer
+			// TODO volume
+			// TODO xpos
+			// TODO ypos
+			));
+	/**
+	 * 
+	 */
+	public static final Collection<GraphicEffect> STANDARD_GRAPHIC_EFFECTS = Collections.unmodifiableCollection(Arrays.asList(
+			new BrightnessEffect(),
+			new GhostEffect(),
+			new MosaicEffect()
+			));
 	private static String ANSWER;
 	private static final LinkedList<ValueListener> ANSWER_LISTENERS = new LinkedList<>();
 	private static long TIMER_TARE;
@@ -51,7 +269,7 @@ public class StandardBlocksExtensions {
 	 * @return A Set of ScriptTupleRunners. Modification of the set has no side-effects.
 	 */
 	public static Set<ScriptTupleRunner> broadcast(String message) {
-		return Activator.WHEN_I_RECEIVE.broadcast(message);
+		return WHEN_I_RECEIVE.broadcast(message);
 	}
 	
 	/**
@@ -62,7 +280,7 @@ public class StandardBlocksExtensions {
 	 * 
 	 */
 	public static OpcodeSubaction call(ScriptContext context, String procName, Object[] params) {
-		return Activator.PROC_DEF.call(context, procName, params);
+		return PROC_DEF.call(context, procName, params);
 	}
 
 	/**
