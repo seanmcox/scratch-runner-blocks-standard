@@ -11,7 +11,7 @@ import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 import com.shtick.utils.scratch.runner.core.elements.Sprite;
-import com.shtick.utils.scratch.runner.standard.StandardBlocksExtensions;
+import com.shtick.utils.scratch.runner.standard.StandardFeatureGenerator;
 
 /**
  * @author sean.cox
@@ -45,7 +45,7 @@ public class Say implements OpcodeAction {
 			throw new IllegalArgumentException(getOpcode()+" opcode only valid in Sprite context.");
 		Sprite sprite = (Sprite)context.getContextObject();
 
-		Image bubbleImage = StandardBlocksExtensions.createTalkBubbleImage((String)arguments[0]);
+		Image bubbleImage = StandardFeatureGenerator.createTalkBubbleImage((String)arguments[0]);
 		runtime.setSpriteBubbleImage(sprite, bubbleImage);
 		return null;
 	}

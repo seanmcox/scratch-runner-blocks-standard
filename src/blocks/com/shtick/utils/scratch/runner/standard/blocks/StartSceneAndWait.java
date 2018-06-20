@@ -9,13 +9,21 @@ import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
-import com.shtick.utils.scratch.runner.standard.StandardBlocksExtensions;
 
 /**
  * @author sean.cox
  *
  */
 public class StartSceneAndWait implements OpcodeAction {
+	private WhenSceneStarts whenSceneStarts;
+
+	/**
+	 * 
+	 * @param whenSceneStarts
+	 */
+	public StartSceneAndWait(WhenSceneStarts whenSceneStarts) {
+		this.whenSceneStarts = whenSceneStarts;
+	}
 
 	/* (non-Javadoc)
 	 * @see com.shtick.utils.scratch.runner.core.Opcode#getOpcode()
@@ -45,7 +53,7 @@ public class StartSceneAndWait implements OpcodeAction {
 			
 			@Override
 			public boolean shouldYield() {
-				if(StandardBlocksExtensions.WHEN_SCENE_STARTS.areSceneChangeScriptsRunning(s0))
+				if(whenSceneStarts.areSceneChangeScriptsRunning(s0))
 					return true;
 				return false;
 			}

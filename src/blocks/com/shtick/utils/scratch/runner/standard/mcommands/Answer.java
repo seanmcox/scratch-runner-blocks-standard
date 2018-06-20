@@ -7,7 +7,6 @@ import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.StageMonitorCommand;
 import com.shtick.utils.scratch.runner.core.ValueListener;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
-import com.shtick.utils.scratch.runner.standard.StandardBlocksExtensions;
 
 /**
  * @author sean.cox
@@ -18,6 +17,16 @@ public class Answer implements StageMonitorCommand {
 	 * The command implemented by this StageMonitorCommand.
 	 */
 	public static final String COMMAND = "answer";
+	
+	private com.shtick.utils.scratch.runner.standard.blocks.Answer answerOpcode;
+
+	/**
+	 * 
+	 * @param answerOpcode
+	 */
+	public Answer(com.shtick.utils.scratch.runner.standard.blocks.Answer answerOpcode) {
+		this.answerOpcode = answerOpcode;
+	}
 
 	/* (non-Javadoc)
 	 * @see com.shtick.utils.scratch.runner.core.StageMonitorCommand#getCommand()
@@ -32,7 +41,7 @@ public class Answer implements StageMonitorCommand {
 	 */
 	@Override
 	public String execute(ScratchRuntime runtime, ScriptContext context, String param) {
-		return StandardBlocksExtensions.getAnswer();
+		return answerOpcode.getAnswer();
 	}
 
 	/* (non-Javadoc)
@@ -40,7 +49,7 @@ public class Answer implements StageMonitorCommand {
 	 */
 	@Override
 	public void addValueListener(ValueListener valueListener) {
-		StandardBlocksExtensions.addAnswerListener(valueListener);
+		answerOpcode.addAnswerListener(valueListener);
 	}
 
 	/* (non-Javadoc)
@@ -48,6 +57,6 @@ public class Answer implements StageMonitorCommand {
 	 */
 	@Override
 	public void removeValueListener(ValueListener valueListener) {
-		StandardBlocksExtensions.removeAnswerListener(valueListener);
+		answerOpcode.removeAnswerListener(valueListener);
 	}
 }

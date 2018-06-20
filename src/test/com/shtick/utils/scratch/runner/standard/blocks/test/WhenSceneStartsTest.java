@@ -13,10 +13,10 @@ import com.shtick.utils.scratch.runner.core.Opcode.DataType;
 import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
 import com.shtick.utils.scratch.runner.core.elements.Stage;
 import com.shtick.utils.scratch.runner.standard.blocks.WhenSceneStarts;
-import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRunner;
-import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRuntime;
-import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadScriptTuple;
-import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadStage;
+import com.shtick.utils.scratch.runner.standard.util.AllBadRunner;
+import com.shtick.utils.scratch.runner.standard.util.AllBadRuntime;
+import com.shtick.utils.scratch.runner.standard.util.AllBadScriptTuple;
+import com.shtick.utils.scratch.runner.standard.util.AllBadStage;
 
 class WhenSceneStartsTest {
 

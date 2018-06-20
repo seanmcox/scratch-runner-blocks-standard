@@ -8,13 +8,21 @@ import com.shtick.utils.scratch.runner.core.OpcodeSubaction;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
-import com.shtick.utils.scratch.runner.standard.StandardBlocksExtensions;
 
 /**
  * @author sean.cox
  *
  */
 public class Broadcast implements OpcodeAction {
+	private WhenIReceive whenIReceive;
+
+	/**
+	 * 
+	 * @param whenIReceive
+	 */
+	public Broadcast(WhenIReceive whenIReceive) {
+		this.whenIReceive = whenIReceive;
+	}
 
 	/* (non-Javadoc)
 	 * @see com.shtick.utils.scratch.runner.core.Opcode#getOpcode()
@@ -37,7 +45,7 @@ public class Broadcast implements OpcodeAction {
 	 */
 	@Override
 	public OpcodeSubaction execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context, Object[] arguments) {
-		StandardBlocksExtensions.broadcast((String)arguments[0]);
+		whenIReceive.broadcast((String)arguments[0]);
 		return null;
 	}
 

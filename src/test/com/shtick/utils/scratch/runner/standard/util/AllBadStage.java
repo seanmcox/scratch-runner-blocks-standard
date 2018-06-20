@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.shtick.utils.scratch.runner.standard.blocks.util;
+package com.shtick.utils.scratch.runner.standard.util;
 
 import com.shtick.utils.scratch.runner.core.SoundMonitor;
 import com.shtick.utils.scratch.runner.core.StageListener;
