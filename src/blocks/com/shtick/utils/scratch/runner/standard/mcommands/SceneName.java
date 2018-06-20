@@ -17,6 +17,7 @@ import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
  */
 public class SceneName implements StageMonitorCommand {
 	private HashSet<ValueListener> valueListeners = new HashSet<>();
+	private ScratchRuntime runtime;
 	private StageListener stageListener = new StageListener() {
 		
 		@Override
@@ -45,6 +46,10 @@ public class SceneName implements StageMonitorCommand {
 	 */
 	@Override
 	public String execute(ScratchRuntime runtime, ScriptContext context, String param) {
+		if(this.runtime==null) {
+			this.runtime = runtime;
+			runtime.getCurrentStage().addStageListener(stageListener);
+		}
 		return runtime.getCurrentStage().getCurrentCostume().getCostumeName();
 	}
 
@@ -54,11 +59,8 @@ public class SceneName implements StageMonitorCommand {
 	@Override
 	public void addValueListener(ValueListener valueListener) {
 		synchronized(valueListeners) {
-			if(valueListeners.size()==0) {
-				valueListener.getRuntime().getCurrentStage().addStageListener(stageListener);
-			}
+			valueListeners.add(valueListener);
 		}
-		valueListeners.add(valueListener);
 	}
 
 	/* (non-Javadoc)
@@ -66,11 +68,8 @@ public class SceneName implements StageMonitorCommand {
 	 */
 	@Override
 	public void removeValueListener(ValueListener valueListener) {
-		valueListeners.remove(valueListener);
 		synchronized(valueListeners) {
-			if(valueListeners.size()==0) {
-				valueListener.getRuntime().getCurrentStage().removeStageListener(stageListener);
-			}
+			valueListeners.remove(valueListener);
 		}
 	}
 }

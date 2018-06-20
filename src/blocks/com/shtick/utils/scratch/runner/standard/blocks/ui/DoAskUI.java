@@ -14,7 +14,6 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.Stroke;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -22,9 +21,9 @@ import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultButtonModel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -172,6 +171,7 @@ public class DoAskUI extends JPanel{
 		private ImageIcon image = new ImageIcon(getClass().getResource("/com/shtick/utils/scratch/runner/standard/blocks/ui/DoAskButton.png"));
 		
 		public DoAskButton() {
+			setModel(new DefaultButtonModel());
 			addMouseListener(new MouseListener() {
 				@Override
 				public void mouseReleased(MouseEvent e) {}
@@ -188,7 +188,7 @@ public class DoAskUI extends JPanel{
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					if(e.getClickCount()==1) {
-						DoAskButton.this.fireActionPerformed(new ActionEvent(DoAskUI.this, ActionEvent.ACTION_FIRST, ""));
+						doClick();
 					}
 				}
 			});

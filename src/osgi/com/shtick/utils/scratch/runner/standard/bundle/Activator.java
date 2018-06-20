@@ -7,10 +7,8 @@ import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceRegistration;
 
-import com.shtick.utils.scratch.runner.core.GraphicEffect;
-import com.shtick.utils.scratch.runner.core.Opcode;
-import com.shtick.utils.scratch.runner.core.StageMonitorCommand;
-import com.shtick.utils.scratch.runner.standard.StandardBlocksExtensions;
+import com.shtick.utils.scratch.runner.core.FeatureSetGenerator;
+import com.shtick.utils.scratch.runner.standard.StandardFeatureGenerator;
 
 /**
  **/
@@ -27,14 +25,7 @@ public class Activator implements BundleActivator {
 	public void start(BundleContext context){
 		System.out.println(this.getClass().getCanonicalName()+": Starting.");
 		synchronized(runtimeRegistrations) {
-			for(Opcode opcode:StandardBlocksExtensions.STANDARD_OPCODES)
-				runtimeRegistrations.add(context.registerService(Opcode.class.getName(), opcode,new Hashtable<String, String>()));
-			
-			for(GraphicEffect graphicEffect:StandardBlocksExtensions.STANDARD_GRAPHIC_EFFECTS)
-				runtimeRegistrations.add(context.registerService(GraphicEffect.class.getName(), graphicEffect,new Hashtable<String, String>()));
-
-			for(StageMonitorCommand stageMonitorCommand:StandardBlocksExtensions.STANDARD_STAGE_MONITOR_COMMANDS)
-				runtimeRegistrations.add(context.registerService(StageMonitorCommand.class.getName(), stageMonitorCommand,new Hashtable<String, String>()));
+			runtimeRegistrations.add(context.registerService(FeatureSetGenerator.class.getName(), new StandardFeatureGenerator(),new Hashtable<String, String>()));
 		}
     }
 

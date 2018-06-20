@@ -12,7 +12,7 @@ import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
 import com.shtick.utils.scratch.runner.core.elements.Sprite;
-import com.shtick.utils.scratch.runner.standard.StandardBlocksExtensions;
+import com.shtick.utils.scratch.runner.standard.StandardFeatureGenerator;
 
 /**
  * @author sean.cox
@@ -48,7 +48,7 @@ public class ThinkDurationElapsedFrom implements OpcodeAction {
 		Number n1 = (Number)arguments[1];
 		Sprite sprite = (Sprite)context.getContextObject();
 
-		Image bubbleImage = StandardBlocksExtensions.createThoughtBubbleImage(s0);
+		Image bubbleImage = StandardFeatureGenerator.createThoughtBubbleImage(s0);
 		runtime.setSpriteBubbleImage(sprite, bubbleImage);
 		final long startTime = System.currentTimeMillis();
 		return new OpcodeSubaction() {

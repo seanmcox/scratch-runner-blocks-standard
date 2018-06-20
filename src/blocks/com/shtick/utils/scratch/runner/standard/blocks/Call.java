@@ -8,7 +8,6 @@ import com.shtick.utils.scratch.runner.core.OpcodeSubaction;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
-import com.shtick.utils.scratch.runner.standard.StandardBlocksExtensions;
 
 /**
  * Not well defined in the Scratch wiki. See ProcDef for more details and references.
@@ -17,6 +16,15 @@ import com.shtick.utils.scratch.runner.standard.StandardBlocksExtensions;
  *
  */
 public class Call implements OpcodeAction {
+	private ProcDef procDef;
+
+	/**
+	 * 
+	 * @param procDef
+	 */
+	public Call(ProcDef procDef) {
+		this.procDef = procDef;
+	}
 
 	/* (non-Javadoc)
 	 * @see com.shtick.utils.scratch.runner.core.Opcode#getOpcode()
@@ -42,6 +50,6 @@ public class Call implements OpcodeAction {
 			Object[] arguments) {
 		String s0 = (String)arguments[0];
 		Object[] args = (Object[])arguments[1];
-		return StandardBlocksExtensions.call(context, s0,args);
+		return procDef.call(context, s0,args);
 	}
 }

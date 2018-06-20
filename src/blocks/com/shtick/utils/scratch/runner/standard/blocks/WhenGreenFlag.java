@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import com.shtick.utils.scratch.runner.core.OpcodeHat;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
-import com.shtick.utils.scratch.runner.standard.StandardBlocksExtensions;
 
 /**
  * @author sean.cox
@@ -16,6 +15,15 @@ import com.shtick.utils.scratch.runner.standard.StandardBlocksExtensions;
  */
 public class WhenGreenFlag implements OpcodeHat {
 	private LinkedList<ScriptTuple> listeners = new LinkedList<>();
+	private Timer timerOpcode;
+
+	/**
+	 * 
+	 * @param timerOpcode
+	 */
+	public WhenGreenFlag(Timer timerOpcode) {
+		this.timerOpcode = timerOpcode;
+	}
 
 	/* (non-Javadoc)
 	 * @see com.shtick.utils.scratch.runner.core.Opcode#getOpcode()
@@ -38,7 +46,7 @@ public class WhenGreenFlag implements OpcodeHat {
 	 */
 	@Override
 	public void applicationStarted(ScratchRuntime runtime) {
-		StandardBlocksExtensions.resetTimer();
+		timerOpcode.tare();
 		synchronized(listeners) {
 			for(ScriptTuple tuple:listeners)
 				runtime.startScript(tuple);

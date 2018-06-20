@@ -11,10 +11,10 @@ import com.shtick.utils.scratch.runner.core.Opcode.DataType;
 import com.shtick.utils.scratch.runner.core.elements.List;
 import com.shtick.utils.scratch.runner.standard.blocks.DeleteLineOfList;
 import com.shtick.utils.scratch.runner.standard.blocks.GetLineOfList;
-import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadList;
-import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRunner;
-import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadRuntime;
-import com.shtick.utils.scratch.runner.standard.blocks.util.AllBadSprite;
+import com.shtick.utils.scratch.runner.standard.util.AllBadList;
+import com.shtick.utils.scratch.runner.standard.util.AllBadRunner;
+import com.shtick.utils.scratch.runner.standard.util.AllBadRuntime;
+import com.shtick.utils.scratch.runner.standard.util.AllBadSprite;
 
 class GetLineOfListTest {
 

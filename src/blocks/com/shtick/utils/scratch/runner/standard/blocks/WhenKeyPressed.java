@@ -13,7 +13,7 @@ import com.shtick.utils.scratch.runner.core.OpcodeHat;
 import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
-import com.shtick.utils.scratch.runner.standard.StandardBlocksExtensions;
+import com.shtick.utils.scratch.runner.standard.StandardFeatureGenerator;
 
 /**
  * @author sean.cox
@@ -54,7 +54,7 @@ public class WhenKeyPressed implements OpcodeHat {
 			
 			@Override
 			public void keyPressed(KeyEvent e) {
-				String keyID = StandardBlocksExtensions.getKeyIdForEvent(e);
+				String keyID = StandardFeatureGenerator.getKeyIdForEvent(e);
 				if(keyID == null)
 					return;
 				java.util.List<ScriptTuple> l;

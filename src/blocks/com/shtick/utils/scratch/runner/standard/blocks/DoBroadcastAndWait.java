@@ -12,13 +12,21 @@ import com.shtick.utils.scratch.runner.core.ScratchRuntime;
 import com.shtick.utils.scratch.runner.core.ScriptTupleRunner;
 import com.shtick.utils.scratch.runner.core.elements.ScriptContext;
 import com.shtick.utils.scratch.runner.core.elements.ScriptTuple;
-import com.shtick.utils.scratch.runner.standard.StandardBlocksExtensions;
 
 /**
  * @author sean.cox
  *
  */
 public class DoBroadcastAndWait implements OpcodeAction {
+	private WhenIReceive whenIReceive;
+
+	/**
+	 * 
+	 * @param whenIReceive
+	 */
+	public DoBroadcastAndWait(WhenIReceive whenIReceive) {
+		this.whenIReceive = whenIReceive;
+	}
 
 	/* (non-Javadoc)
 	 * @see com.shtick.utils.scratch.runner.core.Opcode#getOpcode()
@@ -41,7 +49,7 @@ public class DoBroadcastAndWait implements OpcodeAction {
 	 */
 	@Override
 	public OpcodeSubaction execute(ScratchRuntime runtime, ScriptTupleRunner scriptRunner, ScriptContext context, Object[] arguments) {
-		final Set<ScriptTupleRunner> scriptTupleRunners = StandardBlocksExtensions.broadcast((String)arguments[0]);
+		final Set<ScriptTupleRunner> scriptTupleRunners = whenIReceive.broadcast((String)arguments[0]);
 		return new OpcodeSubaction() {
 			@Override
 			public boolean shouldYield() {
