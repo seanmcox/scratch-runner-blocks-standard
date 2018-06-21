@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <project default="jar" name="Scratch Runner: Blocks, Standard">
-    <property name="file.jar" value="scratchrunner.blocks.standard.jar"/>
+	<tstamp>
+	     <format property="version" pattern="yyyy.MM.dd"/>
+	</tstamp>
+	
+    <property name="file.jar" value="scratchrunner.blocks.standard.${version}.jar"/>
     <property name="dir.buildfile" value="."/>
     <property name="dir.workspace" value="${dir.buildfile}/../../.."/>
     <property name="dir.project" value="${dir.buildfile}/../.."/>
-    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
-    <!--ANT 1.7 is required                                        -->
-    <target name="jar">
+
+    <target name="jar" description="Compiles to an OSGI-bundle jar.">
+		<delete>
+			<fileset dir="../install" includes="scratchrunner.blocks.standard.*.jar"/>
+		</delete>
         <jar destfile="../install/${file.jar}">
             <manifest>
                 <attribute name="Bundle-Name" value="Scratch Runner: Blocks, Standard"/>
@@ -19,11 +25,13 @@
             </manifest>
             <fileset dir="../../bin/blocks"/>
             <fileset dir="../../bin/osgi"/>
-        	
         </jar>
     </target>
 
-	<target name="jar_and_bundle" depends="jar">
-		<copy file="../install/${file.jar}" todir="${dir.workspace}/scratch-runner-main/dist/install/plain/bundle"/>
+	<target name="jar_and_bundle" depends="jar" description="Compiles to an OSGI-bundle jar and pushes the update to the main project.">
+		<delete>
+			<fileset dir="${dir.workspace}/scratch-runner-main/dist/osgi_bundles" includes="scratchrunner.blocks.standard.*.jar"/>
+		</delete>
+		<copy file="../install/${file.jar}" todir="${dir.workspace}/scratch-runner-main/dist/osgi_bundles"/>
 	</target>
 </project>
