@@ -172,7 +172,7 @@ public class DoAskUI extends JPanel{
 		
 		public DoAskButton() {
 			setModel(new DefaultButtonModel());
-			addMouseListener(new MouseListener() {
+			DoAskButton.this.addMouseListener(new MouseListener() {
 				@Override
 				public void mouseReleased(MouseEvent e) {}
 				

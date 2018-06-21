@@ -37,7 +37,7 @@ public class BackgroundIndex implements OpcodeValue {
 	public Object execute(ScratchRuntime runtime, ScriptTupleRunner runner, ScriptContext context, Object[] arguments) {
 		Stage stage = runtime.getCurrentStage();
 		if(stage==null)
-			return 0;
+			return 0L;
 		return stage.getContextPropertyValueByName("background#");
 	}
 }
