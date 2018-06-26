@@ -27,6 +27,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 
 /**
  * @author sean.cox
@@ -171,7 +172,7 @@ public class DoAskUI extends JPanel{
 		private ImageIcon image = new ImageIcon(getClass().getResource("/com/shtick/utils/scratch/runner/standard/blocks/ui/DoAskButton.png"));
 		
 		public DoAskButton() {
-			setModel(new DefaultButtonModel());
+			DoAskButton.this.setModel(new DefaultButtonModel());
 			DoAskButton.this.addMouseListener(new MouseListener() {
 				@Override
 				public void mouseReleased(MouseEvent e) {}
@@ -188,7 +189,9 @@ public class DoAskUI extends JPanel{
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					if(e.getClickCount()==1) {
-						doClick();
+						SwingUtilities.invokeLater(()->{
+							doClick();
+						});
 					}
 				}
 			});
