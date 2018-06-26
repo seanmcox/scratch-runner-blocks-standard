@@ -413,14 +413,26 @@ public class StandardFeatureGenerator implements FeatureSetGenerator{
 				index = normalizedTextRemaining.indexOf(' ', currentLineLength+1);
 				if(index<0) {
 					int tempLineWidth = SAY_FONT_METRICS.stringWidth(textRemaining);
-					if(tempLineWidth<estimatedWidth) {
+					if(currentLineLength>0) {
+						if(tempLineWidth<estimatedWidth) {
+							currentLineLength = textRemaining.length();
+						}
+					}
+					else {
 						currentLineLength = textRemaining.length();
+						if(tempLineWidth>estimatedWidth) {
+							estimatedWidth = tempLineWidth;
+						}
 					}
 					break;
 				}
 				int tempLineWidth = SAY_FONT_METRICS.stringWidth(textRemaining.substring(0, index));
-				if(tempLineWidth>=estimatedWidth)
-					break;
+				if(tempLineWidth>estimatedWidth) {
+					if(currentLineLength>0)
+						break;
+					else
+						estimatedWidth = tempLineWidth;
+				}
 				currentLineLength = index;
 			}
 			lines.add(textRemaining.substring(0, currentLineLength));

@@ -44,6 +44,9 @@ class StandardFeatureGeneratorTest {
 	@Test
 	void testCreateTextImage() {
 		assertNotNull(StandardFeatureGenerator.createTextImage("test"));
+		assertNotNull(StandardFeatureGenerator.createTextImage("Thisisatest"));
+		assertNotNull(StandardFeatureGenerator.createTextImage("Thequickbrownfoxjumpsoverthelazydog"));
+		assertNotNull(StandardFeatureGenerator.createTextImage("This is a test."));
 	}
 
 	@Test
