@@ -73,7 +73,7 @@ class DeleteLineOfListTest {
 
 		AllBadSprite sprite = new ListySprite();
 		try{ // Bad value
-			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"1",1});
+			op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"1",1});
 			fail("Exception expected.");
 		}
 		catch(Throwable t) {
@@ -81,7 +81,7 @@ class DeleteLineOfListTest {
 		}
 
 		try{ // Bad value
-			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {null,"A"});
+			op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {null,"A"});
 			fail("Exception expected.");
 		}
 		catch(Throwable t) {
