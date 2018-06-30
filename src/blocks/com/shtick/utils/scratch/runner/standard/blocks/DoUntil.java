@@ -6,7 +6,6 @@ package com.shtick.utils.scratch.runner.standard.blocks;
 import com.shtick.utils.scratch.runner.core.OpcodeControl;
 import com.shtick.utils.scratch.runner.core.elements.BlockTuple;
 import com.shtick.utils.scratch.runner.core.elements.control.BasicJumpBlockTuple;
-import com.shtick.utils.scratch.runner.core.elements.control.FalseJumpBlockTuple;
 import com.shtick.utils.scratch.runner.core.elements.control.TestBlockTuple;
 import com.shtick.utils.scratch.runner.core.elements.control.TrueJumpBlockTuple;
 
