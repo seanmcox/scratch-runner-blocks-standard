@@ -39,7 +39,7 @@ public class _GreaterThan extends AbstractOpcodeValue {
 	public Object execute(ScratchRuntime runtime, ScriptTupleRunner runner, ScriptContext context, Object[] arguments) {
 		Object a0 = arguments[0];
 		Object a1 = arguments[1];
-		if(((a0 instanceof String)&&(!((String)a0).matches("^-?[0-9]+(\\.[0-9]+)*$")))||((a1 instanceof String)&&(!((String)a1).matches("^-?[0-9]+(\\\\.[0-9]+)*$")))) {
+		if(((a0 instanceof String)&&(!((String)a0).matches("^-?[0-9]+(\\.[0-9]+)*$")))||((a1 instanceof String)&&(!((String)a1).matches("^-?[0-9]+(\\.[0-9]+)*$")))) {
 			String s0 = OpcodeUtils.getStringValue(a0);
 			String s1 = OpcodeUtils.getStringValue(a1);
 			return OpcodeUtils.compareStrings(s0,s1)>0;

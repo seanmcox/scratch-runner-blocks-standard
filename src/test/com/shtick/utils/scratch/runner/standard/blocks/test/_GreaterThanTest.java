@@ -178,6 +178,16 @@ class _GreaterThanTest {
 			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {false,false});
 			assertEquals(false,retval);
 		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"-22.0","-10.5"});
+			assertEquals(false,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"-10.5","-22.0"});
+			assertEquals(true,retval);
+		}
 
 		try {
 			op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1});
