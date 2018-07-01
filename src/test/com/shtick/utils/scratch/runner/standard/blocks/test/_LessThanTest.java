@@ -21,7 +21,7 @@ class _LessThanTest {
 	@Test
 	void testArgumentTypes() {
 		_LessThan op = new _LessThan();
-		assertArrayEquals(new DataType[] {DataType.NUMBER,DataType.NUMBER}, op.getArgumentTypes());
+		assertArrayEquals(new DataType[] {DataType.OBJECT,DataType.OBJECT}, op.getArgumentTypes());
 	}
 
 	@Test
@@ -48,6 +48,146 @@ class _LessThanTest {
 			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1,2});
 			assertEquals(true,retval);
 		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"test",0});
+			assertEquals(false,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {0,"test"});
+			assertEquals(true,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"A","B"});
+			assertEquals(true,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"B","A"});
+			assertEquals(false,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"A","A"});
+			assertEquals(false,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"AA","AB"});
+			assertEquals(true,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"AB","AA"});
+			assertEquals(false,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"AA","AA"});
+			assertEquals(false,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"AA","AAA"});
+			assertEquals(true,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"AAA","AA"});
+			assertEquals(false,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"A",true});
+			assertEquals(true,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"A",false});
+			assertEquals(true,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {true,"A"});
+			assertEquals(false,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {false,"A"});
+			assertEquals(false,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"G",true});
+			assertEquals(true,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"G",false});
+			assertEquals(false,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {true,"G"});
+			assertEquals(false,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {false,"G"});
+			assertEquals(true,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"Z",true});
+			assertEquals(false,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"Z",false});
+			assertEquals(false,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {true,"Z"});
+			assertEquals(true,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {false,"Z"});
+			assertEquals(true,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {false,true});
+			assertEquals(true,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {true,false});
+			assertEquals(false,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {true,true});
+			assertEquals(false,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {false,false});
+			assertEquals(false,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"-22.0","-10.5"});
+			assertEquals(true,retval);
+		}
+		
+		{
+			Object retval = op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"-10.5","-22.0"});
+			assertEquals(false,retval);
+		}
 
 		try {
 			op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {1});
@@ -55,22 +195,6 @@ class _LessThanTest {
 		}
 		catch (Exception t) {
 			
-		}
-		
-		try {
-			op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {"test",0});
-			fail("Exception expected.");
-		}
-		catch(Exception t) {
-			// Expected Result.
-		}
-		
-		try {
-			op.execute(new AllBadRuntime(), new AllBadRunner(), sprite, new Object[] {0,"test"});
-			fail("Exception expected.");
-		}
-		catch(Exception t) {
-			// Expected Result.
 		}
 		
 		try {
