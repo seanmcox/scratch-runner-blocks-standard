@@ -5,6 +5,7 @@
 	</tstamp>
 	
     <property name="file.jar" value="scratchrunner.blocks.standard.${version}.jar"/>
+    <property name="file.src" value="scratchrunner.blocks.standard.${version}.src.zip"/>
     <property name="dir.buildfile" value="."/>
     <property name="dir.workspace" value="${dir.buildfile}/../../.."/>
     <property name="dir.project" value="${dir.buildfile}/../.."/>
@@ -32,7 +33,12 @@
 		<mkdir dir="${dir.workspace}/scratch-runner-main/dist/osgi_bundles"/>
 		<delete>
 			<fileset dir="${dir.workspace}/scratch-runner-main/dist/osgi_bundles" includes="scratchrunner.blocks.standard.*.jar"/>
+			<fileset dir="${dir.workspace}/scratch-runner-main/dist/osgi_bundles" includes="scratchrunner.blocks.standard.*.zip"/>
 		</delete>
 		<copy file="../install/${file.jar}" todir="${dir.workspace}/scratch-runner-main/dist/osgi_bundles"/>
+        <zip destfile="${dir.workspace}/scratch-runner-main/dist/osgi_bundles/${file.src}">
+            <fileset dir="../../src/blocks"/>
+            <fileset dir="../../src/osgi"/>
+        </zip>
 	</target>
 </project>
